@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Website Redesign, Development & CMS — PenMet Parks · Mox Collective</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0A0A0A;--dark:#111111;--white:#FFFFFF;--off-white:#F5F5F5;--light:#F9F9F9;
+  --rule:#E5E5E5;--gray:#999999;--mid:#666666;--ink:#1A1A1A;--ink2:#333333;
+  --accent:#B91800;--accent-2:#C8102E;--accent-dim:rgba(185,24,0,0.08);--accent-dim2:rgba(185,24,0,0.05);
+  --neutral-tint:#F0F0F0;--neutral-border:#E0E0E0;
+  --teal:#0D7377;--amber:#C2841C;--green:#2F7D4F;--forest:#1F5C38;
+  --display:'Barlow Condensed',Impact,sans-serif;--body:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+  --r:2px;--sh:0 1px 4px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.06);--sh-lg:0 2px 8px rgba(0,0,0,0.08),0 12px 40px rgba(0,0,0,0.1);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--white);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+/* STICKY NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);transition:box-shadow .25s ease}
+.nav.scrolled{box-shadow:0 1px 0 rgba(0,0,0,.04),0 8px 28px rgba(0,0,0,.07)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 3rem}
+@media(max-width:900px){.nav-inner{padding:.7rem 1.5rem}}
+.nav-logo{display:flex;align-items:center;flex-shrink:0;text-decoration:none}
+.nav-logo img{height:19px;width:auto;display:block}
+.nav-menu{display:flex;align-items:center;gap:1rem}
+.nav-links{display:flex;align-items:center;gap:.15rem;list-style:none}
+.nav-links a{position:relative;font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--mid);text-decoration:none;padding:.55rem .65rem;border-radius:2px;white-space:nowrap;transition:color .15s}
+.nav-links a:hover{color:var(--accent)}
+.nav-links a.active{color:var(--accent)}
+.nav-links a.active::after{content:'';position:absolute;left:.65rem;right:.65rem;bottom:.05rem;height:2px;background:var(--accent);border-radius:2px}
+.nav-cta{font-family:var(--body);font-size:.68rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--accent);padding:.55rem 1rem;border-radius:var(--r);text-decoration:none;white-space:nowrap;transition:background .2s,transform .2s;flex-shrink:0}
+.nav-cta:hover{background:var(--black);transform:translateY(-1px)}
+.nav-toggle{display:none;flex-direction:column;justify-content:center;gap:4px;width:40px;height:34px;padding:0 9px;background:none;border:1px solid var(--rule);border-radius:2px;cursor:pointer}
+.nav-toggle span{display:block;height:2px;width:100%;background:var(--ink);transition:transform .25s ease,opacity .2s ease}
+.nav-toggle.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+@media(max-width:900px){
+  .nav-toggle{display:flex}
+  .nav-menu{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:#fff;border-bottom:1px solid var(--rule);box-shadow:var(--sh-lg);padding:.5rem 1.5rem 1.25rem;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .2s ease,transform .2s ease,visibility .2s ease}
+  .nav-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+  .nav-links{flex-direction:column;align-items:stretch;gap:0;width:100%}
+  .nav-links a{padding:.9rem .3rem;border-bottom:1px solid var(--rule);font-size:.72rem}
+  .nav-links a.active::after{display:none}
+  .nav-cta{margin-top:1rem;text-align:center;padding:.9rem 1rem;font-size:.78rem}
+}
+@media(prefers-reduced-motion:reduce){.nav,.nav-cta,.nav-toggle span,.nav-menu{transition:none}}
+section{padding:6rem 3rem;scroll-margin-top:72px}
+@media(max-width:900px){section{padding:3.5rem 1.5rem}}
+.si{max-width:1200px;margin:0 auto}
+.sec-lbl{font-family:var(--mono);font-size:.62rem;font-weight:500;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem;display:block}
+.sec-title{font-family:var(--display);font-weight:600;font-size:clamp(2.25rem,4.5vw,3.75rem);color:var(--black);line-height:.95;letter-spacing:.02em;text-transform:uppercase;margin-bottom:1.25rem}
+.sec-sub{font-size:.9375rem;color:var(--mid);line-height:1.75;max-width:660px;font-weight:300}
+.sec-hdr{margin-bottom:3.5rem}
+#whoweare{background:var(--off-white)}
+#fee{background:var(--white)}
+#timeline{background:var(--off-white)}
+#evidence{background:var(--white)}
+#scope{background:var(--off-white)}
+#team{background:var(--white)}
+#proof{background:var(--white)}
+#portfolio{background:var(--off-white)}
+#mockup{background:var(--white)}
+#next{background:var(--black)}
+
+/* HERO */
+.hero{background:var(--white);padding:5rem 3rem 4rem}
+@media(max-width:900px){.hero{padding:3rem 1.5rem 2.5rem}}
+.lockup{display:flex;align-items:center;gap:1.5rem;margin-bottom:4rem;flex-wrap:wrap}
+.lockup img.mox{height:26px;width:auto;object-fit:contain}
+.lockup img.pm{height:46px;width:auto;object-fit:contain}
+.lockup .div{width:1px;height:24px;background:var(--rule)}
+.lockup .prep{font-size:.8125rem;color:var(--gray);font-weight:300}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.62rem;font-weight:500;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.75rem;padding:.35rem .75rem;background:var(--neutral-tint);border:1px solid var(--neutral-border);border-radius:2px}
+.hero h1{font-family:var(--display);font-weight:600;font-size:clamp(3rem,6vw,5.5rem);line-height:.95;color:var(--black);letter-spacing:.02em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero h1 .a{color:var(--accent)}
+.hero p{font-size:.9375rem;color:var(--mid);line-height:1.75;max-width:700px;font-weight:300;margin-bottom:2.5rem}
+
+.btn-accent{background:var(--accent);color:var(--white);border:none;padding:1rem 2.5rem;font-family:var(--body);font-size:.875rem;font-weight:600;border-radius:var(--r);cursor:pointer;transition:all .2s;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;display:inline-block}
+.btn-accent:hover{background:var(--black);transform:translateY(-1px)}
+.btn-accent.wh:hover{background:var(--white);color:var(--black)}
+
+/* FEE CARDS */
+.pcards{display:grid;grid-template-columns:1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.pcard{background:var(--white);transition:background .2s;position:relative}
+.pcard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);transform:scaleY(0);transform-origin:center;transition:transform .25s ease;z-index:2}
+.pcard.open{background:var(--light)}
+.pcard-hdr{padding:2rem;display:flex;align-items:flex-start;justify-content:space-between;cursor:pointer;transition:padding-bottom .25s ease}
+.pcard-toggle{font-size:.68rem;color:var(--accent);font-weight:500;margin-top:.75rem;letter-spacing:.06em;text-transform:uppercase;transition:transform .25s ease,opacity .2s ease;opacity:.75}
+@media(hover:hover){
+  .pcard:not(.open):hover{background:var(--light)}
+  .pcard:not(.open):hover::before{transform:scaleY(1)}
+  .pcard:not(.open):hover .pcard-hdr{padding-bottom:2rem}
+  .pcard:not(.open):hover .pcard-toggle{transform:translateY(4px);opacity:1}
+  .pcard:not(.open):hover .pcard-name{color:var(--accent)}
+}
+.pcard-name{transition:color .2s ease;font-family:var(--display);font-weight:600;font-size:1.75rem;color:var(--black);letter-spacing:.03em;text-transform:uppercase;line-height:1.05;margin-bottom:.5rem}
+.pcard-num{font-family:var(--mono);font-size:.62rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.75rem;display:block;text-transform:uppercase}
+.pcard-right{text-align:right;flex-shrink:0;padding-left:1rem}
+.pcard-price{font-family:var(--display);font-weight:600;font-size:2rem;color:var(--black);letter-spacing:.02em}
+.pcard-period{font-family:var(--body);font-size:.72rem;color:var(--gray);font-weight:400;display:block;margin-top:.2rem}
+.pcard-body{overflow:hidden;max-height:0;transition:max-height .45s ease}
+.pcard-body.open{max-height:3200px}
+@media(hover:hover){
+  .pcard:not(.open):hover .pcard-body{max-height:88px;position:relative}
+  .pcard:not(.open):hover .pcard-body::after{content:'';position:absolute;left:0;right:0;bottom:0;height:38px;background:linear-gradient(to bottom,rgba(249,249,249,0),var(--light));pointer-events:none}
+}
+.pcard-inner{padding:0 2rem 2rem;border-top:1px solid var(--rule);padding-top:1.5rem}
+.pcard-headline{font-family:var(--display);font-weight:600;font-size:1.25rem;color:var(--accent);letter-spacing:.03em;text-transform:uppercase;margin-bottom:.875rem}
+.pcard-desc{font-size:.875rem;color:var(--mid);line-height:1.75;margin-bottom:1.5rem;font-weight:300}
+.pcard-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:600px){.pcard-cols{grid-template-columns:1fr}}
+.vlist{list-style:none;display:flex;flex-direction:column;gap:.875rem}
+.vlist li{display:flex;align-items:flex-start;gap:.75rem;font-size:.8125rem;color:var(--mid);line-height:1.6;font-weight:300}
+.vlist li::before{content:'→';color:var(--accent);font-weight:600;flex-shrink:0}
+.tbadge{display:inline-block;font-family:var(--mono);font-size:.58rem;background:var(--off-white);color:var(--mid);border:1px solid var(--rule);border-radius:var(--r);padding:.2rem .5rem;margin:.25rem .25rem 0 0;letter-spacing:.04em;text-transform:uppercase}
+
+.li-wrap{margin-top:1.75rem;border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.li-wrap-hdr{background:var(--off-white);padding:.75rem 1.25rem;font-family:var(--mono);font-size:.58rem;color:var(--gray);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.li-table{width:100%;border-collapse:collapse;font-size:.8125rem;background:var(--white)}
+.li-table th{padding:.7rem 1.25rem;text-align:left;font-family:var(--mono);font-size:.56rem;font-weight:500;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--rule)}
+.li-table th.num,.li-table td.num{text-align:right;white-space:nowrap}
+.li-table td{padding:.8rem 1.25rem;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--mid);font-weight:300}
+.li-table td.desc{color:var(--ink);font-weight:400}
+.li-table tbody tr:last-child td{border-bottom:none}
+.li-table tfoot td{padding:.9rem 1.25rem;border-top:2px solid var(--ink);font-weight:600;color:var(--ink);font-size:.875rem;background:var(--off-white)}
+.li-table tfoot td.num{font-family:var(--display);font-size:1.25rem;letter-spacing:.02em;color:var(--accent);font-weight:600}
+.li-table tr.li-group td{background:var(--neutral-tint);padding:.55rem 1.25rem}
+.li-table tr.li-group em{font-style:normal;font-family:var(--mono);font-size:.58rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+.li-table tr.li-sub td{background:var(--light);font-weight:600;color:var(--ink)}
+
+.total-band{background:var(--black);color:var(--white);padding:2rem;display:flex;align-items:center;justify-content:space-between;margin-top:1px;flex-wrap:wrap;gap:1rem;border-radius:4px}
+.total-band-lbl{font-family:var(--display);font-weight:600;font-size:1.25rem;letter-spacing:.03em;text-transform:uppercase}
+.total-band-sub{font-family:var(--mono);font-size:.6rem;opacity:.45;letter-spacing:.06em;text-transform:uppercase;margin-top:.4rem;line-height:1.5}
+.total-band-amt{font-family:var(--display);font-weight:600;font-size:2.5rem;letter-spacing:.02em}
+.fee-note{margin-top:1.5rem;padding:.95rem 1.25rem;background:var(--white);border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;font-size:.8125rem;color:var(--ink2);line-height:1.65;font-weight:300}
+.fee-note strong{color:var(--accent);font-weight:600}
+
+/* GANTT */
+.gantt{background:var(--white);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.gantt-scale{display:grid;grid-template-columns:210px 1fr;border-bottom:1px solid var(--rule);background:var(--off-white)}
+.gantt-scale-lbl{padding:.85rem 1.25rem;font-family:var(--mono);font-size:.56rem;color:var(--gray);letter-spacing:.06em;text-transform:uppercase;border-right:1px solid var(--rule);display:flex;align-items:center}
+.gantt-months{display:grid;grid-template-columns:repeat(12,1fr)}
+.gantt-month{padding:.85rem .1rem;text-align:center;font-family:var(--mono);font-size:.54rem;color:var(--gray);border-right:1px solid var(--rule)}
+.gantt-month:last-child{border-right:none}
+.gantt-month b{display:block;color:var(--ink2);font-weight:500}
+.gantt-month span{font-size:.46rem;opacity:.6}
+.gantt-row{display:grid;grid-template-columns:210px 1fr;border-bottom:1px solid var(--rule);align-items:center}
+.gantt-row:last-child{border-bottom:none}
+.gantt-row-lbl{padding:1.1rem 1.25rem;border-right:1px solid var(--rule);height:100%;display:flex;flex-direction:column;justify-content:center}
+.gantt-row-name{font-family:var(--display);font-weight:600;font-size:1.05rem;color:var(--black);letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.gantt-row-dur{font-size:.6rem;color:var(--gray);font-family:var(--mono);margin-top:.3rem;letter-spacing:.03em}
+.gantt-track{position:relative;height:62px}
+.gantt-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(12,1fr)}
+.gantt-grid span{border-right:1px solid var(--rule)}
+.gantt-grid span:last-child{border-right:none}
+.gantt-bar{position:absolute;top:50%;transform:translateY(-50%);height:28px;border-radius:3px;display:flex;align-items:center;padding:0 .7rem;font-family:var(--mono);font-size:.58rem;color:#fff;letter-spacing:.03em;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.12);width:0;overflow:hidden;transition:width .9s cubic-bezier(.4,0,.2,1)}
+.g-discovery{background:var(--accent)}
+.g-design{background:var(--ink)}
+.g-dev{background:var(--teal)}
+.g-impl{background:var(--amber)}
+.g-launch{background:var(--green)}
+.g-optimize{background:var(--green);background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.22),rgba(255,255,255,.22) 4px,transparent 4px,transparent 9px)}
+@media(max-width:760px){
+  .gantt-scale,.gantt-row{grid-template-columns:92px 1fr}
+  .gantt-scale-lbl,.gantt-row-lbl{padding-left:.7rem;padding-right:.55rem}
+  .gantt-row-name{font-size:.82rem}
+  .gantt-bar{font-size:0;padding:0}
+  .gantt-month b{font-size:.5rem}
+}
+.gantt-legend{display:flex;gap:1.25rem;flex-wrap:wrap;margin-top:1.5rem;padding:0 .25rem}
+.gantt-legend-item{display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--mid);font-weight:300}
+.gantt-legend-swatch{width:14px;height:14px;border-radius:3px}
+.gantt-callout{margin-top:1.5rem;padding:1.25rem 1.5rem;background:var(--white);border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:4px;font-size:.8125rem;color:var(--ink2);line-height:1.7;font-weight:300}
+.gantt-callout strong{color:var(--accent);font-weight:600}
+
+/* EVIDENCE */
+.stat-grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin-bottom:3rem}
+@media(max-width:760px){.stat-grid4{grid-template-columns:1fr 1fr}}
+.stat-cell{background:var(--white);padding:1.85rem 1.5rem;position:relative;overflow:hidden}
+.stat-cell::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent)}
+.stat-cell-val{font-family:var(--display);font-weight:600;font-size:3rem;color:var(--accent);letter-spacing:.02em;line-height:.92;margin-bottom:.5rem}
+.stat-cell-lbl{font-size:.8125rem;color:var(--ink);font-weight:400;line-height:1.45;margin-bottom:.35rem}
+.stat-cell-src{font-family:var(--mono);font-size:.55rem;color:var(--gray);letter-spacing:.05em;text-transform:uppercase}
+.prose{max-width:760px}
+.prose h3{font-family:var(--display);font-weight:600;font-size:1.5rem;color:var(--black);letter-spacing:.02em;text-transform:uppercase;margin:2.5rem 0 1rem}
+.prose p{font-size:.9375rem;color:var(--mid);line-height:1.8;font-weight:300;margin-bottom:1.25rem}
+.prose strong{color:var(--ink);font-weight:600}
+.pullquote{border-left:3px solid var(--accent);padding:.5rem 0 .5rem 1.75rem;margin:2rem 0;font-family:var(--display);font-weight:600;font-size:1.5rem;color:var(--ink);letter-spacing:.01em;line-height:1.2;text-transform:uppercase}
+
+/* CAPABILITY CARDS */
+.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+@media(max-width:860px){.cap-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.cap-grid{grid-template-columns:1fr}}
+.cap{background:var(--white);padding:2rem;position:relative;transition:background .2s}
+.cap::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);transform:scaleY(0);transform-origin:center;transition:transform .25s ease}
+@media(hover:hover){.cap:hover{background:var(--light)}.cap:hover::before{transform:scaleY(1)}}
+.cap-num{font-family:var(--mono);font-size:.58rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:1rem}
+.cap-title{font-family:var(--display);font-weight:600;font-size:1.35rem;color:var(--black);letter-spacing:.02em;text-transform:uppercase;line-height:1.05;margin-bottom:.75rem}
+.cap-desc{font-size:.8125rem;color:var(--mid);line-height:1.7;font-weight:300}
+
+/* TEAM */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+@media(max-width:860px){.team-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.team-grid{grid-template-columns:1fr}}
+.tm{background:var(--white);padding:2rem}
+.tm-av{width:46px;height:46px;border-radius:50%;background:var(--black);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:600;font-size:1.05rem;letter-spacing:.04em;margin-bottom:1.1rem}
+.tm.lead .tm-av{background:var(--accent)}
+.tm-name{font-family:var(--display);font-weight:600;font-size:1.3rem;color:var(--black);letter-spacing:.02em;text-transform:uppercase;line-height:1;margin-bottom:.35rem}
+.tm-role{font-family:var(--mono);font-size:.58rem;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.85rem}
+.tm-bio{font-size:.8125rem;color:var(--mid);line-height:1.65;font-weight:300}
+
+/* WHO WE ARE */
+.blk{margin-top:3.5rem}
+.blk-lbl{font-family:var(--mono);font-size:.6rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:1.5rem}
+.truth{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border:1px solid var(--black);border-radius:4px;overflow:hidden}
+@media(max-width:760px){.truth{grid-template-columns:1fr 1fr}}
+.truth-cell{background:var(--black);padding:2rem 1.5rem}
+.truth-num{font-family:var(--mono);font-size:.56rem;color:var(--accent-2);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:1.1rem}
+.truth-stmt{font-family:var(--display);font-weight:600;font-size:1.45rem;color:#fff;line-height:1.1;letter-spacing:.01em;text-transform:uppercase}
+.pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+@media(max-width:680px){.pillars{grid-template-columns:1fr}}
+.pillar{background:var(--white);padding:1.75rem 2rem;display:flex;gap:1.25rem;align-items:flex-start;transition:background .2s}
+@media(hover:hover){.pillar:hover{background:var(--light)}}
+.pillar-idx{font-family:var(--mono);font-size:.72rem;color:var(--accent);font-weight:500;padding-top:.35rem;flex-shrink:0}
+.pillar-body h4{font-family:var(--display);font-weight:600;font-size:1.3rem;color:var(--black);letter-spacing:.02em;text-transform:uppercase;line-height:1.02;margin-bottom:.5rem}
+.pillar-body p{font-size:.8125rem;color:var(--mid);line-height:1.6;font-weight:300}
+
+/* PROOF */
+.quote-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:3.5rem}
+@media(max-width:860px){.quote-grid{grid-template-columns:1fr}}
+.qcard{background:var(--white);border:1px solid var(--rule);border-radius:4px;padding:2rem;display:flex;flex-direction:column}
+.qcard .qmark{font-family:var(--display);font-weight:700;font-size:2.5rem;color:var(--accent);line-height:.6;margin-bottom:1rem}
+.qcard p{font-size:.9rem;color:var(--ink2);line-height:1.7;font-weight:300;flex:1;margin-bottom:1.25rem}
+.qcard .qattr{border-top:1px solid var(--rule);padding-top:1rem}
+.qcard .qname{font-family:var(--display);font-weight:600;font-size:1.05rem;color:var(--black);letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.qcard .qmeta{font-family:var(--mono);font-size:.56rem;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;margin-top:.35rem}
+.trust-hdr{font-family:var(--mono);font-size:.6rem;color:var(--gray);letter-spacing:.12em;text-transform:uppercase;text-align:center;margin-bottom:1.5rem}
+.trust-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+@media(max-width:860px){.trust-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){.trust-grid{grid-template-columns:repeat(3,1fr)}}
+.trust-cell{background:var(--white);padding:1.15rem .75rem;text-align:center;font-family:var(--display);font-weight:600;font-size:1.05rem;color:var(--ink2);letter-spacing:.03em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s;min-height:62px}
+@media(hover:hover){.trust-cell:hover{color:var(--accent);background:var(--light)}}
+
+/* PORTFOLIO */
+.pf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+@media(max-width:760px){.pf-grid{grid-template-columns:1fr}}
+.pf-card{display:block;text-decoration:none;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--white);transition:transform .2s,box-shadow .2s,border-color .2s}
+.pf-card:hover{transform:translateY(-3px);box-shadow:var(--sh-lg);border-color:var(--accent)}
+.pf-shot{position:relative;aspect-ratio:16/10;width:100%;overflow:hidden;background:var(--neutral-tint)}
+.pf-shot::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,var(--light),var(--light) 12px,var(--neutral-tint) 12px,var(--neutral-tint) 24px);z-index:0}
+.pf-shot img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.pf-visit{position:absolute;z-index:2;top:.9rem;right:.9rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(10,10,10,.78);padding:.35rem .6rem;border-radius:2px;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s}
+.pf-card:hover .pf-visit{opacity:1;transform:translateY(0)}
+.pf-meta{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:1.25rem 1.5rem;border-top:1px solid var(--rule)}
+.pf-name{font-family:var(--display);font-weight:600;font-size:1.45rem;color:var(--black);letter-spacing:.02em;text-transform:uppercase;line-height:1;transition:color .2s}
+.pf-card:hover .pf-name{color:var(--accent)}
+.pf-loc{font-family:var(--mono);font-size:.56rem;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;margin-top:.5rem}
+.pf-date{font-family:var(--mono);font-size:.72rem;color:var(--mid);letter-spacing:.04em;white-space:nowrap;flex-shrink:0;padding-top:.2rem}
+
+/* INITIAL MOCKUP */
+.mock-frame{border:1px solid var(--rule);border-radius:8px;overflow:hidden;box-shadow:var(--sh-lg);background:#fff}
+.mock-bar{display:flex;align-items:center;gap:.75rem;padding:.7rem 1rem;background:var(--off-white);border-bottom:1px solid var(--rule)}
+.mock-dots{display:flex;gap:.4rem;flex-shrink:0}
+.mock-dots span{width:11px;height:11px;border-radius:50%;background:var(--rule)}
+.mock-dots span:nth-child(1){background:#ED6A5E}
+.mock-dots span:nth-child(2){background:#F4BF4F}
+.mock-dots span:nth-child(3){background:#61C554}
+.mock-url{flex:1;background:#fff;border:1px solid var(--rule);border-radius:50px;padding:.4rem 1rem;font-family:var(--mono);font-size:.68rem;color:var(--mid);text-align:center;letter-spacing:.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mock-open{font-family:var(--mono);font-size:.6rem;font-weight:500;color:var(--accent);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.mock-open:hover{text-decoration:underline}
+.mock-viewport{position:relative;width:100%;height:660px;background:var(--light)}
+@media(max-width:760px){.mock-viewport{height:480px}}
+.mock-viewport iframe{position:relative;z-index:1;width:100%;height:100%;border:0;display:block}
+.mock-fallback{position:absolute;inset:0;z-index:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem;text-align:center;padding:2rem;color:var(--mid);font-size:.85rem;font-weight:300}
+.mock-actions{display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center;margin-top:1.5rem}
+.mock-note{font-size:.8rem;color:var(--gray);font-weight:300;max-width:560px;line-height:1.6}
+
+/* NEXT / OPTIONS / CTA */
+#next .sec-lbl{color:var(--accent-2)}
+#next .sec-title{color:var(--white)}
+#next .sec-sub{color:rgba(255,255,255,.5)}
+.cta-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin-top:1rem}
+@media(max-width:700px){.cta-steps{grid-template-columns:1fr 1fr}}
+.cta-step{padding:2rem;background:rgba(255,255,255,.03)}
+.cta-num{font-family:var(--mono);font-size:.62rem;color:var(--accent-2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;display:block}
+.cta-stitle{font-family:var(--display);font-weight:600;font-size:1.2rem;color:var(--white);letter-spacing:.03em;text-transform:uppercase;margin-bottom:.75rem;line-height:1.05}
+.cta-stext{font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.7;font-weight:300}
+
+.opt-lbl{font-family:var(--mono);font-size:.6rem;color:var(--accent-2);letter-spacing:.1em;text-transform:uppercase;margin:3.5rem 0 1.25rem;display:block}
+.opt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
+@media(max-width:700px){.opt-grid{grid-template-columns:1fr}}
+.opt{padding:2rem;background:rgba(255,255,255,.03)}
+.opt-term{font-family:var(--display);font-weight:600;font-size:1.6rem;color:var(--white);letter-spacing:.02em;text-transform:uppercase;line-height:1;margin-bottom:.25rem}
+.opt-sub{font-family:var(--mono);font-size:.55rem;color:rgba(255,255,255,.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.25rem}
+.opt-row{display:flex;justify-content:space-between;gap:1rem;font-size:.8rem;color:rgba(255,255,255,.6);font-weight:300;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.opt-row b{color:var(--white);font-family:var(--mono);font-weight:500}
+.opt-perk{font-size:.75rem;color:rgba(255,255,255,.4);font-weight:300;margin-top:1rem;line-height:1.6}
+.opt-perk b{color:var(--accent-2);font-weight:500}
+
+.cta-actions{display:flex;gap:1rem;margin-top:3rem;flex-wrap:wrap;align-items:center}
+.cta-contact{font-family:var(--mono);font-size:.72rem;color:rgba(255,255,255,.45);letter-spacing:.04em}
+.cta-contact a{color:rgba(255,255,255,.8);text-decoration:none}
+.cta-contact a:hover{color:var(--white)}
+
+/* FOOTER */
+.footer{background:rgba(0,0,0,.96);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap;gap:1.25rem}
+@media(max-width:700px){.footer{padding:1.5rem}}
+.footer-logos{display:flex;align-items:center;gap:1.1rem}
+.footer-logos img.mox{height:22px;width:auto;filter:brightness(0) invert(1);opacity:.55}
+.footer-logos .pm-chip{background:#fff;border-radius:4px;padding:.45rem .6rem;display:flex;align-items:center}
+.footer-logos .pm-chip img{height:24px;width:auto}
+.footer-sep{width:1px;height:20px;background:rgba(255,255,255,.12)}
+.footer-meta{font-family:var(--mono);font-size:.56rem;color:rgba(255,255,255,.28);letter-spacing:.05em;text-transform:uppercase;line-height:1.6}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .gantt-bar{transition:none}
+  *{animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ░░ STICKY NAV ░░ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" aria-label="Back to top">
+      <img src="https://framerusercontent.com/images/5AXtk8mTlrNcgAZD1Kmw8k8eo.png?width=2548&height=719" alt="Mox" />
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="nav-menu" id="navMenu">
+      <ul class="nav-links">
+        <li><a href="#whoweare">About</a></li>
+        <li><a href="#fee">Investment</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#evidence">Evidence</a></li>
+        <li><a href="#scope">Scope</a></li>
+        <li><a href="#proof">Clients</a></li>
+        <li><a href="#portfolio">Work</a></li>
+        <li><a href="#mockup">Mockup</a></li>
+      </ul>
+      <a class="nav-cta" href="#next">Start with Mox →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ░░ HERO ░░ -->
+<header class="hero">
+  <div class="si">
+    <div class="lockup">
+      <span class="prep">A proposal prepared for</span>
+      <div class="div"></div>
+      <img class="pm" src="https://penmetparks.org/wp-content/uploads/2024/11/PenMet_LockUp_FullColor.png" alt="PenMet Parks" />
+    </div>
+    <div class="hero-badge">◆ Website Redesign, Development &amp; CMS · Submitted June 17, 2026</div>
+    <h1>Built on evidence.<br><span class="a">Designed for everyone.</span></h1>
+    <p>PenMet Parks serves roughly 40,000 residents across the Gig Harbor peninsula — and your website should be just as welcoming. This is a plan to rebuild it on a foundation of real user research, government-grade security, and WCAG 2.1 AA accessibility: a fast, intuitive public hub where the community finds what it needs without friction, and a simple, drag-and-drop backend your staff can run long after launch. One fixed, not-to-exceed fee, with every dollar tied to a milestone.</p>
+    <button class="btn-accent" onclick="document.getElementById('fee').scrollIntoView({behavior:'smooth'})">View our Proposal ↓</button>
+  </div>
+</header>
+
+<!-- ░░ 01 · WHO WE ARE ░░ -->
+<section id="whoweare">
+  <div class="si">
+    <div class="sec-hdr">
+      <span class="sec-lbl">01 — Who We Are</span>
+      <h2 class="sec-title">A new era of<br>creative professionals.</h2>
+      <p class="sec-sub">Most agencies sell you an opinion. We take a more rigorous approach — evidence over ego, and a senior team that works like an extension of yours. Mox Collective was founded in Boise in 2021 on one principle: <strong style="color:var(--ink);font-weight:600">Bigger Than The Bottom Line.</strong></p>
+    </div>
+
+    <span class="blk-lbl">The Hard Truth</span>
+    <div class="truth">
+      <div class="truth-cell"><span class="truth-num">01</span><div class="truth-stmt">Creativity isn't magic — it's a skill.</div></div>
+      <div class="truth-cell"><span class="truth-num">02</span><div class="truth-stmt">Data is a lot, but it's not everything.</div></div>
+      <div class="truth-cell"><span class="truth-num">03</span><div class="truth-stmt">Good ideas always beat good aesthetics.</div></div>
+      <div class="truth-cell"><span class="truth-num">04</span><div class="truth-stmt">Good ideas aren't always good enough.</div></div>
+    </div>
+
+    <div class="blk">
+      <span class="blk-lbl">Our Approach</span>
+      <div class="cap-grid">
+        <div class="cap"><span class="cap-num">Train Like</span><div class="cap-title">Athletes</div><div class="cap-desc">Continuous learning and reps to build stamina and master the craft — so every project ships with peak efficiency and performance.</div></div>
+        <div class="cap"><span class="cap-num">Think Like</span><div class="cap-title">Creatives</div><div class="cap-desc">Curiosity, empathy, and strategic questioning — so the design resonates deeply and is built ethically for the people who actually use it.</div></div>
+        <div class="cap"><span class="cap-num">Work Like</span><div class="cap-title">Engineers</div><div class="cap-desc">Rigorous, scalable, secure solutions engineered for long-term compliance, staff maintainability, and security — not just good looks.</div></div>
+      </div>
+    </div>
+
+    <div class="blk">
+      <span class="blk-lbl">Creative Manifesto</span>
+      <div class="pillars">
+        <div class="pillar"><span class="pillar-idx">01/</span><div class="pillar-body"><h4>Creativity is wise</h4><p>Knowledge is being right. Wisdom is being right at the right time, in the right way, about the right thing.</p></div></div>
+        <div class="pillar"><span class="pillar-idx">02/</span><div class="pillar-body"><h4>Creativity changes you</h4><p>The work moves an audience — and the process reshapes the people who make it along the way.</p></div></div>
+        <div class="pillar"><span class="pillar-idx">03/</span><div class="pillar-body"><h4>Creativity is persistent through pain</h4><p>We wrestle with ideas until the right one proves itself. The process isn't easy, but it's honest.</p></div></div>
+        <div class="pillar"><span class="pillar-idx">04/</span><div class="pillar-body"><h4>Creativity is empathetic</h4><p>Design is an act of empathy, rooted in understanding the people on the other end of the message.</p></div></div>
+        <div class="pillar"><span class="pillar-idx">05/</span><div class="pillar-body"><h4>Creativity asks better questions</h4><p>We treat creativity as an invitation to wonder, to explore, and to ask better questions.</p></div></div>
+        <div class="pillar"><span class="pillar-idx">06/</span><div class="pillar-body"><h4>Creativity is ethical</h4><p>We reject manipulation and value truth. Done right, creativity builds trust and community.</p></div></div>
+      </div>
+    </div>
+
+    <div class="blk">
+      <span class="blk-lbl">The Team for PenMet Parks</span>
+      <div class="team-grid">
+        <div class="tm lead"><div class="tm-av">JB</div><div class="tm-name">Jeff Barker</div><div class="tm-role">Project &amp; Development Lead · Co-Owner</div><div class="tm-bio">A decade in UX and digital strategy across 500+ web projects. Leads architecture, technical execution, and the three recorded staff training sessions.</div></div>
+        <div class="tm"><div class="tm-av">NZ</div><div class="tm-name">Nathan Zanders</div><div class="tm-role">Research Director · Co-Owner</div><div class="tm-bio">Directs research and discovery — stakeholder interviews, user studies, and behavioral testing — so the design is rooted in how the public actually behaves.</div></div>
+        <div class="tm"><div class="tm-av">MM</div><div class="tm-name">Matthew McMorrow</div><div class="tm-role">Project Manager · Your Point of Contact</div><div class="tm-bio">Director of Client Experience. Owns day-to-day coordination, communication via Slack/Teams, and scheduling — keeping the project on track, in scope, and on budget.</div></div>
+        <div class="tm"><div class="tm-av">JM</div><div class="tm-name">Jonathan Marshall</div><div class="tm-role">Creative Director · UX</div><div class="tm-bio">15+ years in creative strategy and branding for agencies and Fortune 100 names — Nike, AKQA, J&amp;J, Umpqua — with a focus on public-sector and social-impact work.</div></div>
+        <div class="tm"><div class="tm-av">ES</div><div class="tm-name">Einar Schelin</div><div class="tm-role">Copywriter</div><div class="tm-bio">Producer and copywriter specializing in plain-language content — translating dense civic information into clear, actionable copy the whole community can read.</div></div>
+        <div class="tm"><div class="tm-av">AM</div><div class="tm-name">Ally Miller-Buck</div><div class="tm-role">UI Designer</div><div class="tm-bio">Has led UI for 50+ websites, portals, and large-scale digital experiences, with a strong foundation in both print and digital brand systems.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 02 · FEE ░░ -->
+<section id="fee">
+  <div class="si">
+    <div class="sec-hdr">
+      <span class="sec-lbl">02 — Fee &amp; Cost Proposal</span>
+      <h2 class="sec-title">One fixed fee.<br>Every dollar tied<br>to a milestone.</h2>
+      <p class="sec-sub">A fixed-fee, not-to-exceed investment of $84,000 covering discovery, design, development, training, and post-launch optimization. Click any phase to expand its full line-item breakdown.</p>
+    </div>
+    <div class="pcards" id="pcards"></div>
+    <div class="total-band">
+      <div>
+        <div class="total-band-lbl">Total · Not-to-Exceed Investment</div>
+        <div class="total-band-sub">Base project $76,500 + 10% post-launch reserve $7,500 · All Gig Harbor travel included</div>
+      </div>
+      <div class="total-band-amt">$84,000</div>
+    </div>
+    <div class="fee-note">All travel costs for the in-person Gig Harbor kickoff are absorbed by <strong>Mox</strong> — never passed on to the district. For work beyond this scope, key-personnel hourly rates run $300 (strategy / development / copywriting), $150 (UI design), and $100 (project coordination).</div>
+  </div>
+</section>
+
+<!-- ░░ 02 · TIMELINE ░░ -->
+<section id="timeline">
+  <div class="si">
+    <div class="sec-hdr">
+      <span class="sec-lbl">03 — Project Timeline</span>
+      <h2 class="sec-title">A research-first<br>sequence, not<br>a scramble.</h2>
+      <p class="sec-sub">Six phases from contract to optimization — beginning July 8, 2026 and culminating in a December 2026 public launch, followed by a data-driven refinement window through Q2 2027. We don't build until we understand. Dates flex with the start date.</p>
+    </div>
+
+    <div class="gantt" id="gantt">
+      <div class="gantt-scale">
+        <div class="gantt-scale-lbl">Phase · Jul 2026 → Jun 2027</div>
+        <div class="gantt-months">
+          <div class="gantt-month"><b>JUL</b><span>'26</span></div>
+          <div class="gantt-month"><b>AUG</b></div>
+          <div class="gantt-month"><b>SEP</b></div>
+          <div class="gantt-month"><b>OCT</b></div>
+          <div class="gantt-month"><b>NOV</b></div>
+          <div class="gantt-month"><b>DEC</b></div>
+          <div class="gantt-month"><b>JAN</b><span>'27</span></div>
+          <div class="gantt-month"><b>FEB</b></div>
+          <div class="gantt-month"><b>MAR</b></div>
+          <div class="gantt-month"><b>APR</b></div>
+          <div class="gantt-month"><b>MAY</b></div>
+          <div class="gantt-month"><b>JUN</b></div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-row-lbl"><div class="gantt-row-name">Discovery</div><div class="gantt-row-dur">Jul 8 – Aug 28</div></div>
+        <div class="gantt-track">
+          <div class="gantt-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="gantt-bar g-discovery" style="left:2%" data-w="14%">Kickoff · interviews · heatmaps</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-row-lbl"><div class="gantt-row-name">Design</div><div class="gantt-row-dur">Aug 31 – Oct 2</div></div>
+        <div class="gantt-track">
+          <div class="gantt-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="gantt-bar g-design" style="left:16.5%" data-w="9%">Wireframes · UI · copy</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-row-lbl"><div class="gantt-row-name">Development</div><div class="gantt-row-dur">Oct 5 – Nov 6</div></div>
+        <div class="gantt-track">
+          <div class="gantt-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="gantt-bar g-dev" style="left:26.3%" data-w="8.7%">Build · integrations</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-row-lbl"><div class="gantt-row-name">Implementation</div><div class="gantt-row-dur">Nov 9 – Nov 27</div></div>
+        <div class="gantt-track">
+          <div class="gantt-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="gantt-bar g-impl" style="left:35.8%" data-w="5%">Beta · testing</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-row-lbl"><div class="gantt-row-name">Launch</div><div class="gantt-row-dur">December 2026</div></div>
+        <div class="gantt-track">
+          <div class="gantt-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="gantt-bar g-launch" style="left:41.7%" data-w="8.3%">Go-live + training</div>
+        </div>
+      </div>
+
+      <div class="gantt-row">
+        <div class="gantt-row-lbl"><div class="gantt-row-name">Optimization</div><div class="gantt-row-dur">Q1 – Q2 2027 · 10% reserve</div></div>
+        <div class="gantt-track">
+          <div class="gantt-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="gantt-bar g-optimize" style="left:50%" data-w="50%">Analytics · interviews · refinements</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gantt-legend">
+      <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:var(--accent)"></span>Discovery &amp; Planning</div>
+      <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:var(--ink)"></span>Design &amp; Wireframing</div>
+      <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:var(--teal)"></span>Development</div>
+      <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:var(--amber)"></span>Implementation</div>
+      <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:var(--green)"></span>Launch &amp; Training</div>
+      <div class="gantt-legend-item"><span class="gantt-legend-swatch g-optimize" style="background:var(--green)"></span>Post-Launch (flexible)</div>
+    </div>
+
+    <div class="gantt-callout">The post-launch window (Q1–Q2 2027) is the <strong>10% reserve at work</strong> — Google Analytics, heatmaps, and follow-up user interviews to refine the site around how the public actually uses it. It scales up or down with your team's capacity. It is not a slot for new scope.</div>
+  </div>
+</section>
+
+<!-- ░░ 03 · EVIDENCE ░░ -->
+<section id="evidence">
+  <div class="si">
+    <div class="sec-hdr">
+      <span class="sec-lbl">04 — The Evidence · Proven Results</span>
+      <h2 class="sec-title">We replace<br>aesthetic guesswork<br>with data.</h2>
+      <p class="sec-sub">Every Mox build is grounded in behavioral research — heatmaps, webcam eye-tracking, and interviews with real users. Here's what that rigor has produced for clients facing the same challenge as PenMet: a lot of content, a lot of users, and no room for friction.</p>
+    </div>
+
+    <div class="stat-grid4" id="statgrid">
+      <div class="stat-cell"><div class="stat-cell-val" data-val="201" data-suffix="%">0%</div><div class="stat-cell-lbl">Increase in organic keyword rankings</div><div class="stat-cell-src">NCS website redesign</div></div>
+      <div class="stat-cell"><div class="stat-cell-val" data-val="12" data-suffix="%">0%</div><div class="stat-cell-lbl">Lower bounce rate vs. industry benchmark</div><div class="stat-cell-src">NCS website redesign</div></div>
+      <div class="stat-cell"><div class="stat-cell-val" data-val="40" data-suffix="%">0%</div><div class="stat-cell-lbl">Lift in year-end giving after rebuild</div><div class="stat-cell-src">Glocal Community Partners</div></div>
+      <div class="stat-cell"><div class="stat-cell-val" data-val="8" data-suffix=" wks">0 wks</div><div class="stat-cell-lbl">Kickoff to live launch — after a year stalled elsewhere</div><div class="stat-cell-src">NCS, 100+ page migration</div></div>
+    </div>
+
+    <div class="prose">
+      <p>The method is the differentiator. For the 7-Eleven car-wash menu, we used <strong>RealEye webcam eye-tracking</strong> to record exactly where attention landed across four design variations — and where "complexity-induced apathy" caused people to stop reading. In the legacy layout, post-test participants correctly identified top-package features only <strong>40% of the time</strong>. The design was failing to communicate value, and no amount of polish would have revealed that without the data.</p>
+
+      <p>We rebuilt around "information blocking" and F-pattern reading flows — separating titles, details, and prices into distinct visual blocks and exaggerating hierarchy on the items that mattered most. The result: users began reading the right content almost immediately on screen load. We turned a confusing interface into one that guides people to what they need.</p>
+
+      <div class="pullquote">"We don't build until we understand."</div>
+
+      <h3>What this means for PenMet</h3>
+      <p>A park district website is a high-content environment — programs, parks and trails, board materials, rentals, registration, public records. The risk is the same one the 7-Eleven study exposed: a site can look finished and still leave residents unable to find what they came for. Our research-first phase (heatmap tracking, screen testing, and interviews with actual Gig Harbor community members) maps how the public really moves through your information <strong>before</strong> a single page is designed. That's how we reduce bounce rates, shorten the path to registration and records, and cut the volume of support questions your staff fields after launch.</p>
+
+      <p>It's also why the $25,000 discovery phase comes first in the timeline. The sitemap, structure, and visual direction are all built on evidence and approved by your team before development begins — so the platform is intuitive on day one, not after a year of guesswork.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 04 · TECHNICAL SCOPE ░░ -->
+<section id="scope">
+  <div class="si">
+    <div class="sec-hdr">
+      <span class="sec-lbl">05 — Technical Scope</span>
+      <h2 class="sec-title">Everything a public<br>agency site must do.</h2>
+      <p class="sec-sub">Engineered to meet government standards, built for non-technical staff to run, and designed to connect cleanly with the systems your community already uses.</p>
+    </div>
+    <div class="cap-grid">
+      <div class="cap"><span class="cap-num">A1 · CMS</span><div class="cap-title">Government-Focused CMS</div><div class="cap-desc">WordPress + Elementor Pro with custom code — a bespoke front end for the public and a drag-and-drop back end for staff. Tiered roles and permissions enforce a review step before anything goes live; built-in tools schedule, publish, and archive event calendars, news, announcements, and Board of Commissioners updates.</div></div>
+      <div class="cap"><span class="cap-num">A2 · Integrations</span><div class="cap-title">Seamless Third-Party Connections</div><div class="cap-desc">Clean pathways — embeds, single sign-on, or direct APIs — into the systems residents rely on: recreation program registration, youth sports management, clerk record management, and the public records request portal. No jarring jumps between your site and external software.</div></div>
+      <div class="cap"><span class="cap-num">A3 · Accessibility</span><div class="cap-title">ADA &amp; WCAG 2.1 AA</div><div class="cap-desc">Compliance is built into the workflow, not bolted on. We audit accessibility throughout design and development, document conformance before launch, and hand off tools and support so staff hold the standard as new content is published.</div></div>
+      <div class="cap"><span class="cap-num">A4 · Security</span><div class="cap-title">Government-Grade Hosting</div><div class="cap-desc">Secure hosting with server-level firewalls, continuous malware scanning, monitoring, regular updates, and automated daily backups of the full database and public assets — built for data integrity and technical continuity.</div></div>
+      <div class="cap"><span class="cap-num">A5 · Content</span><div class="cap-title">Searchable Public Library</div><div class="cap-desc">A well-organized, searchable clearinghouse for reports, studies, meeting materials, and records — migrated and restructured using behavioral data so the public can actually find documents instead of digging for them.</div></div>
+      <div class="cap"><span class="cap-num">A6 · Training</span><div class="cap-title">Staff Independence</div><div class="cap-desc">Three recorded, hands-on training sessions — general use, backend maintenance, and asset uploads — plus a dedicated how-to video library. Your team manages the platform confidently, regardless of future personnel changes.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 06 · PROOF ░░ -->
+<section id="proof">
+  <div class="si">
+    <div class="sec-hdr">
+      <span class="sec-lbl">06 — Track Record</span>
+      <h2 class="sec-title">Partners say the<br>same thing.</h2>
+      <p class="sec-sub">We aim to feel less like an outside vendor and more like an extension of your team. Clients tend to notice.</p>
+    </div>
+
+    <div class="quote-grid">
+      <div class="qcard">
+        <div class="qmark">"</div>
+        <p>The Mox team was an incredible asset — reliable, talented, and easy to work with. They felt more like internal team members than external contractors, and exceeded every expectation.</p>
+        <div class="qattr"><div class="qname">Laura Moriarty</div><div class="qmeta">Creative Director · National Carwash Solutions</div></div>
+      </div>
+      <div class="qcard">
+        <div class="qmark">"</div>
+        <p>They operate not just as designers, but as true partners who understand both the creative and business sides. Consistently on time, with measurable impact on how our business shows up.</p>
+        <div class="qattr"><div class="qname">Blake Brunk</div><div class="qmeta">Owner · Briva Pool &amp; Spa</div></div>
+      </div>
+      <div class="qcard">
+        <div class="qmark">"</div>
+        <p>Exceptional professionalism, creativity, reliability, and meticulous attention to detail. A valued partner that takes the time to understand our brand and audience.</p>
+        <div class="qattr"><div class="qname">Ben Tester</div><div class="qmeta">Founder · RIVTEK</div></div>
+      </div>
+    </div>
+
+    <div class="trust-hdr">— A few of the organizations our team has worked with —</div>
+    <div class="trust-grid">
+      <div class="trust-cell">Nike</div>
+      <div class="trust-cell">Google</div>
+      <div class="trust-cell">Disney</div>
+      <div class="trust-cell">Microsoft</div>
+      <div class="trust-cell">adidas</div>
+      <div class="trust-cell">PayPal</div>
+      <div class="trust-cell">Sony</div>
+      <div class="trust-cell">REI</div>
+      <div class="trust-cell">Reebok</div>
+      <div class="trust-cell">Petco</div>
+      <div class="trust-cell">J&amp;J</div>
+      <div class="trust-cell">Hyundai</div>
+      <div class="trust-cell">Moda Health</div>
+      <div class="trust-cell">Umpqua</div>
+      <div class="trust-cell">Boise Schools</div>
+      <div class="trust-cell">CWI</div>
+      <div class="trust-cell">PG&amp;E</div>
+      <div class="trust-cell">SkillSignal</div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 07 · PORTFOLIO ░░ -->
+<section id="portfolio">
+  <div class="si">
+    <div class="sec-hdr">
+      <span class="sec-lbl">07 — Selected Work</span>
+      <h2 class="sec-title">Sites we've<br>designed and shipped.</h2>
+      <p class="sec-sub">Clean, fast, content-rich builds across very different sectors — the same craft this engagement brings to a high-content public platform. Each card links to the live site.</p>
+    </div>
+    <div class="pf-grid" id="pfgrid"></div>
+  </div>
+</section>
+
+<!-- ░░ 08 · INITIAL MOCKUP ░░ -->
+<section id="mockup">
+  <div class="si">
+    <div class="sec-hdr">
+      <span class="sec-lbl">08 — Initial Mockup</span>
+      <h2 class="sec-title">A first look at<br>your new homepage.</h2>
+      <p class="sec-sub">Concept, not contract. We rebuilt the PenMet Parks homepage in a modern direction — your real content, reimagined for clarity, speed, and accessibility. It's a live, clickable test site; the finished design is shaped by the research phase. Imagery and figures are illustrative.</p>
+    </div>
+    <div class="mock-frame">
+      <div class="mock-bar">
+        <div class="mock-dots"><span></span><span></span><span></span></div>
+        <div class="mock-url">penmetparks.org · concept by Mox</div>
+        <a class="mock-open" href="penmet-mockup.html" target="_blank" rel="noopener">Open full screen ↗</a>
+      </div>
+      <div class="mock-viewport">
+        <div class="mock-fallback">
+          <span>The interactive test site loads here once it's deployed alongside this page.</span>
+          <a class="btn-accent" href="penmet-mockup.html" target="_blank" rel="noopener">Open the test site ↗</a>
+        </div>
+        <iframe src="penmet-mockup.html" title="PenMet Parks homepage concept mockup" loading="lazy"></iframe>
+      </div>
+    </div>
+    <div class="mock-actions">
+      <a class="btn-accent" href="penmet-mockup.html" target="_blank" rel="noopener">Open the live test site ↗</a>
+      <span class="mock-note">A directional concept built from your current content — a conversation starter, not the final design. Delivered as a standalone page you can share internally or host on a private subdomain.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 09 · NEXT ░░ -->
+<section id="next">
+  <div class="si">
+    <span class="sec-lbl">09 — What Comes Next</span>
+    <h2 class="sec-title">From RFP to launch.</h2>
+    <p class="sec-sub">A clear path with a single point of contact at Mox — and an in-person start. No project-management overhead on the district's side.</p>
+
+    <div class="cta-steps">
+      <div class="cta-step"><span class="cta-num">Step 01</span><div class="cta-stitle">Kickoff in Gig Harbor</div><div class="cta-stext">We travel to your office (on us) for an intensive discovery session — vision, audiences, and the real mission behind the district.</div></div>
+      <div class="cta-step"><span class="cta-num">Step 02</span><div class="cta-stitle">Research &amp; Design</div><div class="cta-stext">Heatmaps, interviews, and a sitemap you approve. Then live Figma design you can comment on in real time — no surprise reveals.</div></div>
+      <div class="cta-step"><span class="cta-num">Step 03</span><div class="cta-stitle">Build &amp; Test</div><div class="cta-stext">WordPress + Elementor build with custom code, third-party integrations, and full accessibility and multi-device testing in staging.</div></div>
+      <div class="cta-step"><span class="cta-num">Step 04</span><div class="cta-stitle">Launch &amp; Train</div><div class="cta-stext">A December 2026 public launch, three recorded training sessions, and a how-to video library — then the data-driven refinement window.</div></div>
+    </div>
+
+    <span class="opt-lbl">Ongoing support — choose your horizon (post-launch, optional)</span>
+    <div class="opt-grid">
+      <div class="opt">
+        <div class="opt-term">1-Year</div>
+        <div class="opt-sub">12-month · annual review</div>
+        <div class="opt-row"><span>Hosting only</span><b>$125/mo</b></div>
+        <div class="opt-row"><span>Full support plan</span><b>$400/mo</b></div>
+        <div class="opt-perk">Full plan packages secure hosting with <b>4 hours</b> of monthly support for updates, troubleshooting, and staff workflow.</div>
+      </div>
+      <div class="opt">
+        <div class="opt-term">3-Year</div>
+        <div class="opt-sub">36-month · rate locked</div>
+        <div class="opt-row"><span>Hosting only</span><b>$115/mo</b></div>
+        <div class="opt-row"><span>Full support plan</span><b>$375/mo</b></div>
+        <div class="opt-perk">Locks fees against market increases and adds <b>bi-annual accessibility health checks</b> to preserve WCAG 2.1 AA as staff publish.</div>
+      </div>
+      <div class="opt">
+        <div class="opt-term">5-Year</div>
+        <div class="opt-sub">60-month · best value</div>
+        <div class="opt-row"><span>Hosting only</span><b>$100/mo</b></div>
+        <div class="opt-row"><span>Full support plan</span><b>$350/mo</b></div>
+        <div class="opt-perk">Lowest rates, priority support, daily backups, plus an <b>annual UX review</b> using behavioral analytics to keep the platform current.</div>
+      </div>
+    </div>
+
+    <div class="cta-actions">
+      <a href="mailto:jeff@wearemox.com?subject=PenMet%20Parks%20Website%20Proposal" class="btn-accent wh">Start with Mox →</a>
+      <div class="cta-contact">Jeff Barker · Co-Owner &amp; COO &nbsp;·&nbsp; <a href="mailto:jeff@wearemox.com">jeff@wearemox.com</a> &nbsp;·&nbsp; <a href="tel:2082407013">208-240-7013</a></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-logos">
+    <img class="mox" src="https://framerusercontent.com/images/5AXtk8mTlrNcgAZD1Kmw8k8eo.png?width=2548&height=719" alt="Mox" />
+    <div class="footer-sep"></div>
+    <span class="pm-chip"><img src="https://penmetparks.org/wp-content/uploads/2024/11/PenMet_LockUp_FullColor.png" alt="PenMet Parks" /></span>
+  </div>
+  <div class="footer-meta">Peninsula Metropolitan Park District · Website Redesign, Development &amp; CMS · Submitted June 17, 2026 · Figures are not-to-exceed estimates · Confidential</div>
+</footer>
+
+<script>
+/* ── FEE CARDS ── */
+var pricingData=[
+  {num:'01',name:'Discovery & R&D',tag:'Pre-Production',price:'$25,000',period:'research-first foundation',
+   headline:'REPLACE GUESSWORK WITH DATA.',
+   desc:'Before any pixel is placed, we ground the project in evidence: behavioral heatmaps, screen testing, and interviews with real Gig Harbor residents. Everything downstream is built on a sitemap and direction your team has already approved.',
+   bullets:[
+     'In-person kickoff at your Gig Harbor office (travel on us)',
+     'Market + user research and heatmap / screen-testing studies',
+     'Stakeholder interviews across departments',
+     'UX mapping, wireframing, and style testing on real users',
+     'User interviews with members of the public',
+     'Recommended sitemap, structure, and visual direction for approval'
+   ],
+   tags:['Research','Heatmaps','UX Mapping','User Interviews','Sitemap'],
+   rows:[
+     {desc:'<em>Pre-Production · R&amp;D</em>',group:true},
+     {desc:'Market + User Research',detail:'12 units',amount:'$3,600'},
+     {desc:'UX / Wireframing',detail:'35 units',amount:'$10,500'},
+     {desc:'Style Testing',detail:'18 units',amount:'$5,400'},
+     {desc:'Moodboard',detail:'8 units',amount:'$2,400'},
+     {desc:'Site Map',detail:'2 units',amount:'$600'},
+     {desc:'Stakeholder Meetings',detail:'15 units',amount:'$1,500'},
+     {desc:'User Interviews',detail:'1 unit',amount:'$1,000'},
+     {desc:'Subtotal — Discovery &amp; R&amp;D',amount:'$25,000',sub:true}
+   ]},
+  {num:'02',name:'Design & Production',tag:'Production · Design',price:'$28,700',period:'UI, copy & creative direction',
+   headline:'A MODERN, ACCESSIBLE INTERFACE.',
+   desc:'We translate research into a full responsive UI on the new architecture — tested with users, reviewed for accessibility, and written in plain language so civic information is genuinely readable.',
+   bullets:[
+     'Full responsive website UI design',
+     'Plain-language copywriting support (15 hrs)',
+     'Creative direction across the system',
+     'User testing of the designs',
+     'WCAG 2.1 AA accessibility design review',
+     'Structured revision rounds before build'
+   ],
+   tags:['UI Design','Copywriting','Accessibility','Creative Direction'],
+   rows:[
+     {desc:'<em>Production · Design</em>',group:true},
+     {desc:'Full Website UI',detail:'50 units',amount:'$15,000'},
+     {desc:'Copywriting Support',detail:'15 units',amount:'$4,500'},
+     {desc:'Creative Direction',detail:'13 units',amount:'$3,900'},
+     {desc:'User Testing',detail:'6 units',amount:'$1,800'},
+     {desc:'Accessibility (WCAG 2.1 AA) Design Review',detail:'5 units',amount:'$1,500'},
+     {desc:'Revisions',detail:'1 unit',amount:'$2,000'},
+     {desc:'Subtotal — Design &amp; Production',amount:'$28,700',sub:true}
+   ]},
+  {num:'03',name:'Development & Launch',tag:'Post-Production · Deployment',price:'$22,800',period:'build, test & go-live',
+   headline:'BUILT ON WORDPRESS + ELEMENTOR PRO.',
+   desc:'Custom code inside a drag-and-drop environment: a high-end public experience your non-technical team can maintain. Tested across devices and assistive tech, then launched.',
+   bullets:[
+     'Theme install + custom-code development',
+     'Homepage development',
+     'Additional page development across the site',
+     'Multi-device and accessibility testing',
+     'Revision rounds',
+     'Launch and go-live'
+   ],
+   tags:['WordPress','Elementor Pro','Custom Code','Testing','Launch'],
+   rows:[
+     {desc:'<em>Post-Production · Development · Deployment</em>',group:true},
+     {desc:'Theme Install + Development',detail:'6 units',amount:'$1,800'},
+     {desc:'Homepage Development',detail:'15 units',amount:'$4,500'},
+     {desc:'Additional Page Development',detail:'40 units',amount:'$12,000'},
+     {desc:'Testing',detail:'10 units',amount:'$3,000'},
+     {desc:'Revisions',detail:'1 unit',amount:'$1,000'},
+     {desc:'Launch',detail:'1 unit',amount:'$500'},
+     {desc:'Subtotal — Development &amp; Launch',amount:'$22,800',sub:true}
+   ]},
+  {num:'04',name:'Post-Launch Optimization',tag:'Contingency · 10% Reserve',price:'$7,500',period:'evidence-based refinement',
+   headline:'WE DON\u2019T STOP AT LAUNCH.',
+   desc:'A reserved budget — roughly 10% of base cost — to optimize the live site against real behavior. It scales up or down with your team\u2019s capacity and discovery findings.',
+   bullets:[
+     'Google Analytics + heatmap implementation',
+     'Post-launch user interviews with actual visitors',
+     'Evidence-based technical and design refinements',
+     'Flexible — scales to your team\u2019s capacity',
+     'Reserved at ~10% of the base project cost'
+   ],
+   tags:['Analytics','Heatmaps','User Interviews','Refinements'],
+   rows:[
+     {desc:'<em>Contingency · 10% Reserve</em>',group:true},
+     {desc:'Post-Launch Data Tracking',detail:'6 units',amount:'$1,800'},
+     {desc:'Post-Launch User Interviews',detail:'9 units',amount:'$2,700'},
+     {desc:'Technical Refinements',detail:'10 units',amount:'$3,000'},
+     {desc:'Subtotal — Post-Launch Reserve',amount:'$7,500',sub:true}
+   ]}
+];
+
+function buildLineItems(item){
+  var rows=item.rows.map(function(r){
+    if(r.group) return '<tr class="li-group"><td colspan="3">'+r.desc+'</td></tr>';
+    if(r.sub)   return '<tr class="li-sub"><td class="desc">'+r.desc+'</td><td>'+(r.detail||'')+'</td><td class="num">'+r.amount+'</td></tr>';
+    return '<tr><td class="desc">'+r.desc+'</td><td>'+(r.detail||'')+'</td><td class="num">'+r.amount+'</td></tr>';
+  }).join('');
+  return '<div class="li-wrap">'+
+    '<div class="li-wrap-hdr"><span>Line-Item Breakdown</span><span>'+item.name+' · '+item.price+'</span></div>'+
+    '<table class="li-table"><thead><tr><th>Item</th><th>Detail</th><th class="num">Amount</th></tr></thead>'+
+    '<tbody>'+rows+'</tbody>'+
+    '<tfoot><tr><td>Phase total</td><td></td><td class="num">'+item.price+'</td></tr></tfoot></table></div>';
+}
+
+function renderPricingCards(){
+  document.getElementById('pcards').innerHTML=pricingData.map(function(item,i){
+    var b1=item.bullets.slice(0,3).map(function(b){return '<li>'+b+'</li>';}).join('');
+    var b2=item.bullets.slice(3).map(function(b){return '<li>'+b+'</li>';}).join('');
+    return '<div class="pcard" id="pcard-'+i+'">'+
+      '<div class="pcard-hdr" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard('+i+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();toggleCard('+i+')}">'+
+        '<div><span class="pcard-num">'+item.num+' / '+item.tag+'</span><div class="pcard-name">'+item.name+'</div></div>'+
+        '<div class="pcard-right"><div class="pcard-price">'+item.price+'</div><span class="pcard-period">'+item.period+'</span><div class="pcard-toggle" id="ptoggle-'+i+'">▼ Expand</div></div>'+
+      '</div>'+
+      '<div class="pcard-body" id="pbody-'+i+'"><div class="pcard-inner">'+
+        '<div class="pcard-headline">'+item.headline+'</div>'+
+        '<div class="pcard-desc">'+item.desc+'</div>'+
+        '<div class="pcard-cols"><ul class="vlist">'+b1+'</ul><ul class="vlist">'+b2+'</ul></div>'+
+        buildLineItems(item)+
+      '</div></div></div>';
+  }).join('');
+}
+var openCard=null;
+function toggleCard(i){
+  var body=document.getElementById('pbody-'+i),tog=document.getElementById('ptoggle-'+i),card=document.getElementById('pcard-'+i);
+  var hdr=card.querySelector('.pcard-hdr');
+  if(openCard===i){body.classList.remove('open');card.classList.remove('open');tog.textContent='▼ Expand';hdr.setAttribute('aria-expanded','false');openCard=null;}
+  else{
+    if(openCard!==null){document.getElementById('pbody-'+openCard).classList.remove('open');document.getElementById('pcard-'+openCard).classList.remove('open');document.getElementById('ptoggle-'+openCard).textContent='▼ Expand';document.getElementById('pcard-'+openCard).querySelector('.pcard-hdr').setAttribute('aria-expanded','false');}
+    body.classList.add('open');card.classList.add('open');tog.textContent='▲ Collapse';hdr.setAttribute('aria-expanded','true');openCard=i;
+  }
+}
+renderPricingCards();
+
+/* ── GANTT BAR REVEAL ── */
+(function(){
+  var g=document.getElementById('gantt');if(!g)return;
+  function grow(){g.querySelectorAll('.gantt-bar').forEach(function(b,i){setTimeout(function(){b.style.width=b.getAttribute('data-w');},i*120);});}
+  if('IntersectionObserver' in window){
+    var o=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){grow();o.disconnect();}});},{threshold:.25});
+    o.observe(g);
+  } else { g.querySelectorAll('.gantt-bar').forEach(function(b){b.style.width=b.getAttribute('data-w');}); }
+})();
+
+/* ── STAT COUNT-UP ── */
+(function(){
+  var grid=document.getElementById('statgrid');if(!grid)return;
+  function run(){
+    grid.querySelectorAll('.stat-cell-val').forEach(function(el){
+      var target=parseInt(el.getAttribute('data-val'),10),suffix=el.getAttribute('data-suffix')||'',start=null,dur=1100;
+      function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1),ease=p===1?1:1-Math.pow(2,-10*p);el.textContent=Math.round(target*ease)+suffix;if(p<1)requestAnimationFrame(step);else el.textContent=target+suffix;}
+      requestAnimationFrame(step);
+    });
+  }
+  if('IntersectionObserver' in window){
+    var o=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){run();o.disconnect();}});},{threshold:.4});
+    o.observe(grid);
+  } else run();
+})();
+</script>
+<script>
+/* ── PORTFOLIO ──
+   Homepage screenshots auto-generate from each live URL (WordPress mShots — free, no key).
+   To use your own crisp screenshots instead, set the "img" field to a hosted image URL.
+   Edit name / loc / date / url below as needed. */
+var portfolioData=[
+  {name:"National Carwash Solutions", loc:"Grimes, IA", url:"https://www.ncswash.com/", date:"2025", img:""},
+  {name:"SkillSignal", loc:"New York, NY", url:"https://www.skillsignal.com/", date:"2024", img:""},
+  {name:"The Foxy Kind", loc:"Phoenix, AZ", url:"https://thefoxykind.com/", date:"2023", img:""},
+  {name:"Speeders Car Wash", loc:"Bristol, CT", url:"https://speeders.com/", date:"2024", img:""}
+];
+function renderPortfolio(){
+  var g=document.getElementById('pfgrid');if(!g)return;
+  g.innerHTML=portfolioData.map(function(p){
+    var shot=p.img?p.img:'https://s.wordpress.com/mshots/v1/'+encodeURIComponent(p.url)+'?w=1200&h=750';
+    return '<a class="pf-card" href="'+p.url+'" target="_blank" rel="noopener">'+
+      '<div class="pf-shot"><span class="pf-visit">Visit site ↗</span>'+
+        '<img loading="lazy" src="'+shot+'" alt="'+p.name+' homepage screenshot">'+
+      '</div>'+
+      '<div class="pf-meta"><div><div class="pf-name">'+p.name+'</div>'+(p.loc?'<div class="pf-loc">'+p.loc+'</div>':'')+'</div>'+
+      '<div class="pf-date">'+p.date+'</div></div>'+
+    '</a>';
+  }).join('');
+}
+renderPortfolio();
+</script>
+<script>
+/* ── STICKY NAV ── */
+(function(){
+  var nav=document.getElementById('nav'),tgl=document.getElementById('navToggle'),menu=document.getElementById('navMenu');
+  if(!nav)return;
+  function onScroll(){nav.classList.toggle('scrolled',window.scrollY>8);}
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+  if(tgl&&menu){
+    tgl.addEventListener('click',function(){
+      var open=menu.classList.toggle('open');tgl.classList.toggle('open');tgl.setAttribute('aria-expanded',open);
+    });
+    menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');tgl.classList.remove('open');tgl.setAttribute('aria-expanded','false');});});
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('.nav-links a')),map={};
+  links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+  if('IntersectionObserver' in window){
+    var spy=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){links.forEach(function(l){l.classList.remove('active');});var a=map[e.target.id];if(a)a.classList.add('active');}
+      });
+    },{rootMargin:'-45% 0px -50% 0px',threshold:0});
+    document.querySelectorAll('section[id]').forEach(function(s){spy.observe(s);});
+  }
+})();
+</script>
+</body>
+</html>

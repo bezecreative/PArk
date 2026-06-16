@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PenMet Parks — Homepage Concept (Mockup by Mox)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1F5C38;--green-deep:#10331F;--green-bright:#3C9A5F;--leaf:#6FBF73;
+  --sand:#F4F1E9;--cream:#FBFAF6;--white:#fff;
+  --ink:#16261C;--mid:#5A6B60;--line:#E3E0D6;--gold:#E0A43B;
+  --display:'Poppins',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;
+  --r:10px;--sh:0 2px 8px rgba(16,51,31,.06),0 12px 32px rgba(16,51,31,.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--ink);background:var(--cream);line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 2rem}
+@media(max-width:760px){.wrap{padding:0 1.25rem}}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.08;letter-spacing:-.01em}
+.eyebrow{font-family:var(--display);font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--green-bright)}
+.btn{display:inline-block;font-family:var(--display);font-weight:600;font-size:.9rem;text-decoration:none;padding:.85rem 1.6rem;border-radius:50px;transition:all .2s;cursor:pointer;border:2px solid transparent}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:var(--green-deep);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+.btn-ghost:hover{background:#fff;color:var(--green);border-color:#fff}
+.btn-out{background:transparent;color:var(--green);border-color:var(--green)}
+.btn-out:hover{background:var(--green);color:#fff}
+section{padding:5.5rem 0}
+@media(max-width:760px){section{padding:3.5rem 0}}
+.sec-head{max-width:680px;margin-bottom:3rem}
+.sec-head h2{font-size:clamp(2rem,4vw,2.9rem);font-weight:700;margin:.6rem 0 .9rem;color:var(--ink)}
+.sec-head p{color:var(--mid);font-size:1.02rem;font-weight:300}
+
+/* CONCEPT BANNER */
+.concept{background:var(--green-deep);color:rgba(255,255,255,.85);font-size:.72rem;text-align:center;padding:.5rem 1rem;letter-spacing:.02em}
+.concept strong{color:#fff;font-weight:600}
+
+/* UTILITY BAR */
+.util{background:var(--green);color:rgba(255,255,255,.9);font-size:.76rem}
+.util .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:.5rem;padding-bottom:.5rem;gap:1rem}
+.util .tag{font-family:var(--display);font-weight:600;letter-spacing:.04em}
+.util .links{display:flex;gap:1.25rem;flex-wrap:wrap}
+.util a{text-decoration:none;color:rgba(255,255,255,.9);transition:color .15s}
+.util a:hover{color:#fff}
+@media(max-width:760px){.util .tag{display:none}.util .wrap{justify-content:center}}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;background:rgba(251,250,246,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:box-shadow .2s}
+.nav.scrolled{box-shadow:0 6px 24px rgba(16,51,31,.08)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:.7rem;padding-bottom:.7rem;gap:1rem}
+.nav-logo img{height:46px;width:auto}
+.nav-menu{display:flex;align-items:center;gap:.5rem}
+.nav-links{display:flex;align-items:center;gap:.35rem;list-style:none}
+.nav-links a{font-family:var(--display);font-weight:500;font-size:.9rem;color:var(--ink);text-decoration:none;padding:.5rem .7rem;border-radius:6px;transition:color .15s,background .15s}
+.nav-links a:hover{color:var(--green);background:var(--sand)}
+.nav-toggle{display:none;flex-direction:column;gap:5px;width:42px;height:38px;justify-content:center;padding:0 9px;background:none;border:1px solid var(--line);border-radius:8px;cursor:pointer}
+.nav-toggle span{height:2px;background:var(--green);transition:transform .25s,opacity .2s}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:1000px){
+  .nav-toggle{display:flex}
+  .nav-menu{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--cream);border-bottom:1px solid var(--line);box-shadow:var(--sh);padding:.5rem 2rem 1.25rem;opacity:0;visibility:hidden;transform:translateY(-8px);transition:.2s}
+  .nav-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+  .nav-links{flex-direction:column;align-items:stretch;width:100%}
+  .nav-links a{padding:.9rem .4rem;border-bottom:1px solid var(--line)}
+  .nav .btn{margin-top:1rem;text-align:center}
+}
+
+/* HERO */
+.hero{position:relative;min-height:80vh;display:flex;align-items:flex-end;color:#fff;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,51,31,.25) 0%,rgba(16,51,31,.35) 45%,rgba(16,51,31,.85) 100%)}
+.hero .wrap{position:relative;z-index:1;padding-top:5rem;padding-bottom:4rem;width:100%}
+.hero .eyebrow{color:var(--leaf)}
+.hero h1{font-size:clamp(2.6rem,6.5vw,5rem);font-weight:800;margin:1rem 0;text-shadow:0 2px 24px rgba(0,0,0,.25);max-width:14ch}
+.hero p{font-size:1.1rem;font-weight:300;max-width:540px;color:rgba(255,255,255,.92);margin-bottom:2rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+
+/* MARQUEE */
+.marquee{background:var(--green-deep);color:#fff;overflow:hidden;white-space:nowrap;padding:.9rem 0}
+.marquee-track{display:inline-block;animation:scroll 26s linear infinite}
+.marquee-track span{font-family:var(--display);font-weight:600;font-size:.95rem;letter-spacing:.05em;padding:0 1.5rem;opacity:.92}
+.marquee-track span::after{content:'•';color:var(--leaf);margin-left:3rem}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* QUICK TILES */
+#quick{background:var(--cream)}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+@media(max-width:860px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:1.75rem 1.25rem;text-align:center;text-decoration:none;color:var(--ink);transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:.85rem}
+.tile:hover{transform:translateY(-4px);box-shadow:var(--sh);border-color:var(--green-bright)}
+.tile-ic{width:64px;height:64px;border-radius:50%;background:var(--sand);display:flex;align-items:center;justify-content:center;transition:background .2s}
+.tile:hover .tile-ic{background:var(--leaf)}
+.tile-ic img{width:38px;height:38px;object-fit:contain}
+.tile span{font-family:var(--display);font-weight:600;font-size:.92rem;line-height:1.2}
+
+/* MISSION / STATS */
+#mission{background:var(--green);color:#fff}
+.mission-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:3.5rem;align-items:center}
+@media(max-width:860px){.mission-grid{grid-template-columns:1fr;gap:2.5rem}}
+#mission .eyebrow{color:var(--leaf)}
+#mission h2{font-size:clamp(2rem,4vw,2.8rem);font-weight:700;margin:.6rem 0 1.25rem}
+#mission p{color:rgba(255,255,255,.88);font-weight:300;margin-bottom:1rem}
+.values{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem}
+.values span{font-family:var(--display);font-size:.78rem;font-weight:500;letter-spacing:.03em;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:.4rem .85rem;border-radius:50px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.15);border-radius:var(--r);overflow:hidden}
+.stat{background:var(--green);padding:2rem 1.5rem}
+.stat-num{font-family:var(--display);font-weight:800;font-size:3rem;line-height:1;color:#fff}
+.stat-num .suf{color:var(--leaf)}
+.stat-lbl{font-size:.82rem;color:rgba(255,255,255,.8);margin-top:.4rem}
+
+/* WAYS / CARDS */
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+@media(max-width:860px){.cards3{grid-template-columns:1fr}}
+.pcard{background:var(--white);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);text-decoration:none;color:var(--ink);transition:transform .2s}
+.pcard:hover{transform:translateY(-5px)}
+.pcard-img{aspect-ratio:3/2;overflow:hidden}
+.pcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.pcard:hover .pcard-img img{transform:scale(1.05)}
+.pcard-body{padding:1.5rem}
+.pcard-num{font-family:var(--display);font-size:.72rem;font-weight:600;color:var(--green-bright);letter-spacing:.1em}
+.pcard-body h3{font-size:1.4rem;font-weight:700;margin:.4rem 0 .5rem}
+.pcard-body p{font-size:.9rem;color:var(--mid);font-weight:300;margin-bottom:1rem}
+.pcard-link{font-family:var(--display);font-weight:600;font-size:.85rem;color:var(--green)}
+
+/* REC CENTER SPOTLIGHT */
+#reccenter{background:var(--sand)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+@media(max-width:860px){.split{grid-template-columns:1fr;gap:2rem}}
+.split-img{border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);aspect-ratio:4/3}
+.split-img img{width:100%;height:100%;object-fit:cover}
+.split h2{font-size:clamp(1.9rem,3.5vw,2.6rem);font-weight:700;margin:.6rem 0 1rem}
+.split p{color:var(--mid);font-weight:300;margin-bottom:1rem}
+.split ul{list-style:none;margin:1.25rem 0 1.75rem;display:flex;flex-direction:column;gap:.6rem}
+.split li{display:flex;gap:.65rem;font-size:.95rem;color:var(--ink)}
+.split li::before{content:'✓';color:var(--green-bright);font-weight:700}
+
+/* GUIDES */
+#guides{background:var(--cream)}
+.guides{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+@media(max-width:680px){.guides{grid-template-columns:1fr}}
+.guide{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:1.5rem;display:flex;gap:1.5rem;align-items:center;transition:box-shadow .2s}
+.guide:hover{box-shadow:var(--sh)}
+.guide img{width:110px;border-radius:6px;box-shadow:var(--sh);flex-shrink:0}
+.guide h3{font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
+.guide p{font-size:.86rem;color:var(--mid);font-weight:300;margin-bottom:.9rem}
+
+/* NEWS */
+#news{background:var(--sand)}
+.news{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+@media(max-width:860px){.news{grid-template-columns:1fr}}
+.ncard{background:var(--white);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.ncard-img{aspect-ratio:16/10;overflow:hidden;position:relative}
+.ncard-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.ncard:hover .ncard-img img{transform:scale(1.05)}
+.ncard-cat{position:absolute;top:.85rem;left:.85rem;background:var(--green);color:#fff;font-family:var(--display);font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.3rem .65rem;border-radius:50px}
+.ncard-body{padding:1.35rem;flex:1;display:flex;flex-direction:column}
+.ncard-body h3{font-size:1.08rem;font-weight:600;line-height:1.25;flex:1}
+.ncard-date{font-size:.75rem;color:var(--mid);margin-top:.85rem;font-family:var(--display);font-weight:500}
+
+/* LOOP */
+#loop{background:var(--green-deep);color:#fff}
+.loop-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:3rem;align-items:center}
+@media(max-width:860px){.loop-grid{grid-template-columns:1fr;gap:2.5rem}}
+#loop h2{font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;margin:.5rem 0 1rem}
+#loop p{color:rgba(255,255,255,.82);font-weight:300;margin-bottom:1.5rem}
+.signup{display:flex;gap:.6rem;flex-wrap:wrap}
+.signup input{flex:1;min-width:200px;padding:.85rem 1.1rem;border-radius:50px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-family:var(--body);font-size:.92rem}
+.signup input::placeholder{color:rgba(255,255,255,.55)}
+.socials{display:flex;flex-direction:column;gap:.75rem}
+.socials a{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:#fff;font-family:var(--display);font-weight:500;font-size:.95rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);padding:.8rem 1.1rem;border-radius:50px;transition:background .2s}
+.socials a:hover{background:rgba(255,255,255,.16)}
+.socials .dot{width:30px;height:30px;border-radius:50%;background:var(--leaf);color:var(--green-deep);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;font-family:var(--display);flex-shrink:0}
+
+/* FINAL CTA */
+.final{position:relative;color:#fff;text-align:center;overflow:hidden}
+.final-bg{position:absolute;inset:0;z-index:0}
+.final-bg img{width:100%;height:100%;object-fit:cover}
+.final-bg::after{content:'';position:absolute;inset:0;background:rgba(16,51,31,.7)}
+.final .wrap{position:relative;z-index:1;padding-top:6rem;padding-bottom:6rem}
+.final h2{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;margin:.75rem 0 1.5rem}
+.final p{color:rgba(255,255,255,.88);font-weight:300;max-width:560px;margin:0 auto 2rem}
+
+/* FOOTER */
+.foot{background:var(--green-deep);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
+.foot-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:2.5rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.12)}
+@media(max-width:860px){.foot-top{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.foot-top{grid-template-columns:1fr}}
+.foot-brand h3{font-family:var(--display);font-weight:800;font-size:1.5rem;color:#fff;letter-spacing:.01em}
+.foot-brand .tl{color:var(--leaf);font-family:var(--display);font-weight:600;font-size:.85rem;margin:.35rem 0 1.25rem}
+.foot-brand p{font-size:.85rem;line-height:1.7}
+.foot-col h4{font-family:var(--display);font-weight:600;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:#fff;margin-bottom:1rem}
+.foot-col a{display:block;text-decoration:none;font-size:.86rem;color:rgba(255,255,255,.7);padding:.3rem 0;transition:color .15s}
+.foot-col a:hover{color:var(--leaf)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;padding-top:1.5rem;font-size:.72rem;color:rgba(255,255,255,.5)}
+.foot-bottom a{color:var(--leaf);text-decoration:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="concept">CONCEPT MOCKUP — Homepage redesign for <strong>PenMet Parks</strong>, prepared by <strong>Mox</strong>. Content from penmetparks.org · imagery &amp; figures for demonstration only.</div>
+
+<!-- UTILITY BAR -->
+<div class="util">
+  <div class="wrap">
+    <span class="tag">Parks for All. Parks for Life. · Gig Harbor, WA</span>
+    <div class="links">
+      <a href="https://anc.apm.activecommunities.com/penmetparks/home?onlineSiteId=0&from_original_cui=true" target="_blank" rel="noopener">Register</a>
+      <a href="https://citizenportal.dudesolutions.com/PenMetParks" target="_blank" rel="noopener">Maintenance Request</a>
+      <a href="https://lp.constantcontactpages.com/sl/MAiy9dA" target="_blank" rel="noopener">Newsletter</a>
+      <a href="https://www.facebook.com/PenMetParks" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.instagram.com/penmetparks/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="nav-logo" href="https://penmetparks.org/" target="_blank" rel="noopener" aria-label="PenMet Parks home">
+      <img src="https://penmetparks.org/wp-content/uploads/2024/11/PenMet_LockUp_FullColor.png" alt="PenMet Parks" />
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="nav-menu" id="navMenu">
+      <ul class="nav-links">
+        <li><a href="#quick">Recreation</a></li>
+        <li><a href="#reccenter">Rec Center</a></li>
+        <li><a href="#ways">Parks</a></li>
+        <li><a href="#guides">Guides</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#mission">About</a></li>
+      </ul>
+      <a class="btn btn-primary" href="https://anc.apm.activecommunities.com/penmetparks/home?onlineSiteId=0&from_original_cui=true" target="_blank" rel="noopener">Register →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg"><img src="https://penmetparks.org/wp-content/uploads/2026/05/20260502_ParksAppreciationDay-185-1.jpg" alt="Community at a PenMet Parks event" /></div>
+  <div class="wrap">
+    <span class="eyebrow">Gig Harbor Peninsula · Washington</span>
+    <h1>Parks for All. Parks for Life.</h1>
+    <p>From youth sports and summer camps to trails, rentals, and a brand-new recreation center — discover everything happening across your park district.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="https://anc.apm.activecommunities.com/penmetparks/activity/search?onlineSiteId=0" target="_blank" rel="noopener">Register for an Activity →</a>
+      <a class="btn btn-ghost" href="#ways">Explore the Parks</a>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Youth &amp; Adult Sports</span><span>Summer Camps</span><span>Trails &amp; Open Space</span><span>The New Rec Center</span><span>Special Events</span><span>Facility Rentals</span><span>Parks for All</span>
+    <span>Youth &amp; Adult Sports</span><span>Summer Camps</span><span>Trails &amp; Open Space</span><span>The New Rec Center</span><span>Special Events</span><span>Facility Rentals</span><span>Parks for All</span>
+  </div>
+</div>
+
+<!-- QUICK TILES -->
+<section id="quick">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Jump right in</span><h2>How can we help today?</h2><p>The things our community reaches for most — one tap away.</p></div>
+    <div class="tiles">
+      <a class="tile" href="https://anc.apm.activecommunities.com/penmetparks/home?onlineSiteId=0&from_original_cui=true" target="_blank" rel="noopener"><span class="tile-ic"><img src="https://penmetparks.org/wp-content/uploads/2026/01/Register-160x160.png" alt=""></span><span>Register &amp; Book</span></a>
+      <a class="tile" href="https://penmetparks.org/youth-sports/" target="_blank" rel="noopener"><span class="tile-ic"><img src="https://penmetparks.org/wp-content/uploads/2026/01/Youth-Sports-160x160.png" alt=""></span><span>Youth Sports</span></a>
+      <a class="tile" href="https://penmetparks.org/adult-sports/" target="_blank" rel="noopener"><span class="tile-ic"><img src="https://penmetparks.org/wp-content/uploads/2026/01/Adult-Sports-160x160.png" alt=""></span><span>Adult Sports</span></a>
+      <a class="tile" href="https://penmetparks.org/parks/" target="_blank" rel="noopener"><span class="tile-ic"><img src="https://penmetparks.org/wp-content/uploads/2026/01/Parks-160x160.png" alt=""></span><span>Visit a Park</span></a>
+      <a class="tile" href="https://penmetparks.org/rentals/" target="_blank" rel="noopener"><span class="tile-ic"><img src="https://penmetparks.org/wp-content/uploads/2026/01/Rentals-1-160x160.png" alt=""></span><span>Rentals</span></a>
+      <a class="tile" href="https://penmetparks.org/special-events/" target="_blank" rel="noopener"><span class="tile-ic"><img src="https://penmetparks.org/wp-content/uploads/2026/01/Special-Events-160x160.png" alt=""></span><span>Special Events</span></a>
+      <a class="tile" href="https://penmetparks.org/board-meetings/" target="_blank" rel="noopener"><span class="tile-ic"><img src="https://penmetparks.org/wp-content/uploads/2026/01/Board-Meetings-160x160.png" alt=""></span><span>Board Meetings</span></a>
+      <a class="tile" href="https://penmetparks.org/current-projects/" target="_blank" rel="noopener"><span class="tile-ic"><img src="https://penmetparks.org/wp-content/uploads/2026/01/Capital-Projects-160x160.png" alt=""></span><span>Capital Projects</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION / STATS -->
+<section id="mission">
+  <div class="wrap">
+    <div class="mission-grid">
+      <div>
+        <span class="eyebrow">Our mission</span>
+        <h2>Enhancing quality of life through parks &amp; recreation.</h2>
+        <p>Our vision is to be a leader in promoting health and well-being in a thriving community. Five values guide everything we do:</p>
+        <div class="values">
+          <span>Stewardship</span><span>Inspiration</span><span>Responsibility</span><span>Collaboration</span><span>Integrity</span>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-num" data-val="40" data-suf="K">0</div><div class="stat-lbl">Residents served across the peninsula</div></div>
+        <div class="stat"><div class="stat-num" data-val="20" data-suf="+">0</div><div class="stat-lbl">Years serving the community</div></div>
+        <div class="stat"><div class="stat-num" data-val="150" data-suf="+">0</div><div class="stat-lbl">Programs &amp; activities a year</div></div>
+        <div class="stat"><div class="stat-num" data-val="25" data-suf="+">0</div><div class="stat-lbl">Parks, trails &amp; open spaces</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAYS TO PLAY -->
+<section id="ways">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Find your fun</span><h2>Three ways to get outside</h2><p>However you like to spend your time on the peninsula, there's a place for you.</p></div>
+    <div class="cards3">
+      <a class="pcard" href="https://penmetparks.org/youth-sports/" target="_blank" rel="noopener">
+        <div class="pcard-img"><img src="https://penmetparks.org/wp-content/uploads/2026/05/20260502_ParksAppreciationDay-185-1.jpg" alt="Recreation programs"></div>
+        <div class="pcard-body"><span class="pcard-num">01 / Get Active</span><h3>Sports &amp; Programs</h3><p>Youth and adult leagues, camps, classes, and specialized recreation for every age and ability.</p><span class="pcard-link">Browse programs →</span></div>
+      </a>
+      <a class="pcard" href="https://penmetparks.org/parks/" target="_blank" rel="noopener">
+        <div class="pcard-img"><img src="https://penmetparks.org/wp-content/uploads/2026/05/DSC_0742-scaled.jpg" alt="Parks and trails"></div>
+        <div class="pcard-body"><span class="pcard-num">02 / Explore</span><h3>Parks &amp; Trails</h3><p>Discover green spaces, waterfront, sport courts, and trails across the Gig Harbor peninsula.</p><span class="pcard-link">Find a park →</span></div>
+      </a>
+      <a class="pcard" href="https://penmetparks.org/rentals/" target="_blank" rel="noopener">
+        <div class="pcard-img"><img src="https://penmetparks.org/wp-content/uploads/2026/05/Scarecrow-Festival-2025143-1.jpg" alt="Events and rentals"></div>
+        <div class="pcard-body"><span class="pcard-num">03 / Celebrate</span><h3>Events &amp; Rentals</h3><p>Special events all year, plus shelters, fields, and venues you can rent for your next gathering.</p><span class="pcard-link">Plan an event →</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- REC CENTER -->
+<section id="reccenter">
+  <div class="wrap">
+    <div class="split">
+      <div class="split-img"><img src="https://penmetparks.org/wp-content/uploads/2026/05/DSC_0742-scaled.jpg" alt="PenMet Parks Recreation Center"></div>
+      <div>
+        <span class="eyebrow">Now open</span>
+        <h2>The PenMet Parks Recreation Center</h2>
+        <p>A gathering place for the whole community — with programs, drop-in fun, and the Neighborhood Greens mini golf course.</p>
+        <ul>
+          <li>Rec Center passes &amp; drop-in options</li>
+          <li>Neighborhood Greens indoor mini golf</li>
+          <li>Bookable spaces for classes &amp; parties</li>
+        </ul>
+        <a class="btn btn-out" href="https://penmetparks.org/penmet-parks-recreation-center/" target="_blank" rel="noopener">Explore the Rec Center →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUIDES -->
+<section id="guides">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Plan your season</span><h2>Summer guides are here</h2><p>Our Spring/Summer Rec Guide and Summer Camp Guide are out — see what's planned for the season ahead.</p></div>
+    <div class="guides">
+      <div class="guide">
+        <img src="https://penmetparks.org/wp-content/uploads/2026/03/PenmetParks_3_11_2026_rev108_proof_FINAL_BG-edits_Page_01-286x360.jpg" alt="Spring/Summer Rec Guide cover">
+        <div><h3>Spring/Summer Rec Guide</h3><p>Everything happening this season — classes, leagues, events, and more.</p><a class="btn btn-out" href="https://penmetparks.org/wp-content/uploads/2026/03/Spring-Summer-2026-Recreation-Guide-Final-compressed.pdf" target="_blank" rel="noopener">Read / Download →</a></div>
+      </div>
+      <div class="guide">
+        <img src="https://penmetparks.org/wp-content/uploads/2026/03/PenmetParks_3_24_2026_rev68_proof_FINAL-REC-0302_Page_01-286x360.jpg" alt="Summer Camp Guide cover">
+        <div><h3>Summer Camp Guide</h3><p>Camps for every interest and age, all summer long across the peninsula.</p><a class="btn btn-out" href="https://penmetparks.org/wp-content/uploads/2026/03/FINAL-Summer-Camp-Guide-2026-compressed-2.pdf" target="_blank" rel="noopener">Read / Download →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">What's happening</span><h2>News &amp; announcements</h2><p>The latest from across PenMet Parks.</p></div>
+    <div class="news">
+      <a class="ncard" href="https://penmetparks.org/penmet-parks-summer-concert-lineup-announced/" target="_blank" rel="noopener">
+        <div class="ncard-img"><span class="ncard-cat">Events</span><img src="https://penmetparks.org/wp-content/uploads/2026/05/DSC_0742-scaled.jpg" alt=""></div>
+        <div class="ncard-body"><h3>Summer Concert lineup announced</h3><div class="ncard-date">Concerts in the Park · Summer 2026</div></div>
+      </a>
+      <a class="ncard" href="https://penmetparks.org/seeking-vendors-for-upcoming-penmet-parks-events/" target="_blank" rel="noopener">
+        <div class="ncard-img"><span class="ncard-cat">Community</span><img src="https://penmetparks.org/wp-content/uploads/2026/05/Scarecrow-Festival-2025143-1.jpg" alt=""></div>
+        <div class="ncard-body"><h3>Seeking vendors for upcoming events</h3><div class="ncard-date">Get Involved · 2026</div></div>
+      </a>
+      <a class="ncard" href="https://penmetparks.org/holiday-hours-juneteenth/" target="_blank" rel="noopener">
+        <div class="ncard-img"><span class="ncard-cat">Notice</span><img src="https://penmetparks.org/wp-content/uploads/2026/05/Rec-Center-Holiday-Closure.jpg" alt=""></div>
+        <div class="ncard-body"><h3>Holiday hours: Juneteenth</h3><div class="ncard-date">Rec Center · June 2026</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STAY IN THE LOOP -->
+<section id="loop">
+  <div class="wrap">
+    <div class="loop-grid">
+      <div>
+        <span class="eyebrow">Stay in the loop</span>
+        <h2>Never miss what's next</h2>
+        <p>Our monthly e-newsletter covers everything coming up — from new recreation offerings to park project updates.</p>
+        <div class="signup">
+          <input type="email" placeholder="you@email.com" aria-label="Email address" />
+          <a class="btn btn-primary" href="https://lp.constantcontactpages.com/sl/MAiy9dA" target="_blank" rel="noopener">Subscribe →</a>
+        </div>
+      </div>
+      <div class="socials">
+        <a href="https://www.facebook.com/PenMetParks" target="_blank" rel="noopener"><span class="dot">f</span>Follow on Facebook</a>
+        <a href="https://www.instagram.com/penmetparks/" target="_blank" rel="noopener"><span class="dot">◎</span>Follow on Instagram</a>
+        <a href="https://pe.linkedin.com/company/penmetparks" target="_blank" rel="noopener"><span class="dot">in</span>Connect on LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="final-bg"><img src="https://penmetparks.org/wp-content/uploads/2026/05/Scarecrow-Festival-2025143-1.jpg" alt=""></div>
+  <div class="wrap">
+    <span class="eyebrow" style="color:var(--leaf)">Get out and play</span>
+    <h2>Your next adventure starts here.</h2>
+    <p>Register for a program, reserve a space, or just find a trail and go. The whole peninsula is your backyard.</p>
+    <a class="btn btn-primary" href="https://anc.apm.activecommunities.com/penmetparks/home?onlineSiteId=0&from_original_cui=true" target="_blank" rel="noopener">Register Now →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <h3>PenMet Parks</h3>
+        <div class="tl">Parks for All. Parks for Life.</div>
+        <p>District Headquarters<br>2416 14th Ave NW, Gig Harbor, WA 98335<br>253-858-3400 · 8:30 AM–5 PM, Mon–Fri<br>After-hours park emergencies: (253) 255-0555</p>
+      </div>
+      <div class="foot-col">
+        <h4>Recreation</h4>
+        <a href="https://penmetparks.org/youth-sports/" target="_blank" rel="noopener">Youth Sports</a>
+        <a href="https://penmetparks.org/adult-sports/" target="_blank" rel="noopener">Adult Sports</a>
+        <a href="https://penmetparks.org/camps/" target="_blank" rel="noopener">Camps</a>
+        <a href="https://penmetparks.org/special-events/" target="_blank" rel="noopener">Special Events</a>
+      </div>
+      <div class="foot-col">
+        <h4>Parks &amp; Rentals</h4>
+        <a href="https://penmetparks.org/parks/" target="_blank" rel="noopener">Visit a Park</a>
+        <a href="https://penmetparks.org/rentals/" target="_blank" rel="noopener">Rentals</a>
+        <a href="https://penmetparks.org/penmet-parks-recreation-center/" target="_blank" rel="noopener">Recreation Center</a>
+        <a href="https://penmetparks.org/community-venues/" target="_blank" rel="noopener">Meetings &amp; Events</a>
+      </div>
+      <div class="foot-col">
+        <h4>About &amp; Public Info</h4>
+        <a href="https://penmetparks.org/mission-vision/" target="_blank" rel="noopener">Mission &amp; Values</a>
+        <a href="https://penmetparks.org/board-meetings/" target="_blank" rel="noopener">Board Meetings</a>
+        <a href="https://penmetparks.org/current-projects/" target="_blank" rel="noopener">Current Projects</a>
+        <a href="https://penmetparks.org/contact/" target="_blank" rel="noopener">Contact Us</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2016–2026 Peninsula Metropolitan Park District</span>
+      <span>Homepage concept mockup designed by <a href="https://wearemox.com" target="_blank" rel="noopener">Mox</a> · wearemox.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* nav scroll shadow + mobile toggle */
+(function(){
+  var nav=document.getElementById('nav'),t=document.getElementById('navToggle'),m=document.getElementById('navMenu');
+  window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>8);},{passive:true});
+  t.addEventListener('click',function(){var o=m.classList.toggle('open');t.classList.toggle('open');t.setAttribute('aria-expanded',o);});
+  m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){m.classList.remove('open');t.classList.remove('open');});});
+})();
+/* stat count-up */
+(function(){
+  var stats=document.querySelectorAll('.stat-num');if(!stats.length)return;
+  function run(){stats.forEach(function(el){var tgt=+el.getAttribute('data-val'),suf=el.getAttribute('data-suf')||'',s=null;
+    function step(ts){if(!s)s=ts;var p=Math.min((ts-s)/1100,1),e=1-Math.pow(2,-10*p);el.innerHTML=Math.round(tgt*e)+'<span class="suf">'+suf+'</span>';if(p<1)requestAnimationFrame(step);else el.innerHTML=tgt+'<span class="suf">'+suf+'</span>';}
+    requestAnimationFrame(step);});}
+  if('IntersectionObserver' in window){var o=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){run();o.disconnect();}});},{threshold:.4});o.observe(document.getElementById('mission'));}else run();
+})();
+</script>
+</body>
+</html>
