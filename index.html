@@ -42,7 +42,7 @@ body{font-family:var(--body);background:var(--white);color:var(--ink);line-heigh
 .nav-toggle.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
 .nav-toggle.open span:nth-child(2){opacity:0}
 .nav-toggle.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-@media(max-width:900px){
+@media(max-width:1000px){
   .nav-toggle{display:flex}
   .nav-menu{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:#fff;border-bottom:1px solid var(--rule);box-shadow:var(--sh-lg);padding:.5rem 1.5rem 1.25rem;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .2s ease,transform .2s ease,visibility .2s ease}
   .nav-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
@@ -211,8 +211,14 @@ section{padding:6rem 3rem;scroll-margin-top:72px}
 @media(max-width:860px){.team-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.team-grid{grid-template-columns:1fr}}
 .tm{background:var(--white);padding:2rem}
-.tm-av{width:46px;height:46px;border-radius:50%;background:var(--black);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:600;font-size:1.05rem;letter-spacing:.04em;margin-bottom:1.1rem}
-.tm.lead .tm-av{background:var(--accent)}
+.tm-av{width:58px;height:58px;border-radius:50%;overflow:hidden;background:var(--neutral-tint);margin-bottom:1.1rem;flex-shrink:0;box-shadow:0 0 0 0 var(--accent);transition:box-shadow .2s ease}
+.tm-av img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+.tm-name{transition:color .2s ease}
+@media(hover:hover){
+  .tm:hover .tm-av{box-shadow:0 0 0 2px var(--accent)}
+  .tm:hover .tm-av img{transform:scale(1.05)}
+  .tm:hover .tm-name{color:var(--accent)}
+}
 .tm-name{font-family:var(--display);font-weight:600;font-size:1.3rem;color:var(--black);letter-spacing:.02em;text-transform:uppercase;line-height:1;margin-bottom:.35rem}
 .tm-role{font-family:var(--mono);font-size:.58rem;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.85rem}
 .tm-bio{font-size:.8125rem;color:var(--mid);line-height:1.65;font-weight:300}
@@ -222,7 +228,9 @@ section{padding:6rem 3rem;scroll-margin-top:72px}
 .blk-lbl{font-family:var(--mono);font-size:.6rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:1.5rem}
 .truth{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border:1px solid var(--black);border-radius:4px;overflow:hidden}
 @media(max-width:760px){.truth{grid-template-columns:1fr 1fr}}
-.truth-cell{background:var(--black);padding:2rem 1.5rem}
+.truth-cell{background:var(--black);padding:2rem 1.5rem;transition:background .2s ease}
+.truth-cell:hover{background:var(--accent)}
+.truth-cell:hover .truth-num{color:#fff}
 .truth-num{font-family:var(--mono);font-size:.56rem;color:var(--accent-2);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:1.1rem}
 .truth-stmt{font-family:var(--display);font-weight:600;font-size:1.45rem;color:#fff;line-height:1.1;letter-spacing:.01em;text-transform:uppercase}
 .pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
@@ -252,16 +260,19 @@ section{padding:6rem 3rem;scroll-margin-top:72px}
 /* PORTFOLIO */
 .pf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
 @media(max-width:760px){.pf-grid{grid-template-columns:1fr}}
-.pf-card{display:block;text-decoration:none;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--white);transition:transform .2s,box-shadow .2s,border-color .2s}
-.pf-card:hover{transform:translateY(-3px);box-shadow:var(--sh-lg);border-color:var(--accent)}
-.pf-shot{position:relative;aspect-ratio:16/10;width:100%;overflow:hidden;background:var(--neutral-tint)}
-.pf-shot::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,var(--light),var(--light) 12px,var(--neutral-tint) 12px,var(--neutral-tint) 24px);z-index:0}
-.pf-shot img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
-.pf-visit{position:absolute;z-index:2;top:.9rem;right:.9rem;font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(10,10,10,.78);padding:.35rem .6rem;border-radius:2px;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s}
-.pf-card:hover .pf-visit{opacity:1;transform:translateY(0)}
+.pf-card{border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:var(--white);transition:box-shadow .2s,border-color .2s}
+.pf-card:hover{box-shadow:var(--sh-lg);border-color:var(--accent)}
+.ba{position:relative;aspect-ratio:16/10;width:100%;overflow:hidden;background:var(--neutral-tint);cursor:ew-resize;touch-action:none;user-select:none;-webkit-user-select:none}
+.ba-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;-webkit-user-drag:none;user-select:none}
+.ba-before{clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
+.ba-divider{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.12);pointer-events:none}
+.ba-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;color:var(--ink);font-size:1rem;font-weight:700;cursor:ew-resize;pointer-events:auto}
+.ba-tag{position:absolute;top:.7rem;z-index:3;font-family:var(--mono);font-size:.56rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(10,10,10,.6);padding:.28rem .55rem;border-radius:2px;pointer-events:none}
+.ba-tag-l{left:.7rem}
+.ba-tag-r{right:.7rem}
 .pf-meta{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:1.25rem 1.5rem;border-top:1px solid var(--rule)}
-.pf-name{font-family:var(--display);font-weight:600;font-size:1.45rem;color:var(--black);letter-spacing:.02em;text-transform:uppercase;line-height:1;transition:color .2s}
-.pf-card:hover .pf-name{color:var(--accent)}
+.pf-name{font-family:var(--display);font-weight:600;font-size:1.45rem;color:var(--black);letter-spacing:.02em;text-transform:uppercase;line-height:1;text-decoration:none;transition:color .2s}
+.pf-name:hover{color:var(--accent)}
 .pf-loc{font-family:var(--mono);font-size:.56rem;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;margin-top:.5rem}
 .pf-date{font-family:var(--mono);font-size:.72rem;color:var(--mid);letter-spacing:.04em;white-space:nowrap;flex-shrink:0;padding-top:.2rem}
 
@@ -408,12 +419,12 @@ section{padding:6rem 3rem;scroll-margin-top:72px}
     <div class="blk">
       <span class="blk-lbl">The Team for PenMet Parks</span>
       <div class="team-grid">
-        <div class="tm lead"><div class="tm-av">JB</div><div class="tm-name">Jeff Barker</div><div class="tm-role">Project &amp; Development Lead · Co-Owner</div><div class="tm-bio">A decade in UX and digital strategy across 500+ web projects. Leads architecture, technical execution, and the three recorded staff training sessions.</div></div>
-        <div class="tm"><div class="tm-av">NZ</div><div class="tm-name">Nathan Zanders</div><div class="tm-role">Research Director · Co-Owner</div><div class="tm-bio">Directs research and discovery — stakeholder interviews, user studies, and behavioral testing — so the design is rooted in how the public actually behaves.</div></div>
-        <div class="tm"><div class="tm-av">MM</div><div class="tm-name">Matthew McMorrow</div><div class="tm-role">Project Manager · Your Point of Contact</div><div class="tm-bio">Director of Client Experience. Owns day-to-day coordination, communication via Slack/Teams, and scheduling — keeping the project on track, in scope, and on budget.</div></div>
-        <div class="tm"><div class="tm-av">JM</div><div class="tm-name">Jonathan Marshall</div><div class="tm-role">Creative Director · UX</div><div class="tm-bio">15+ years in creative strategy and branding for agencies and Fortune 100 names — Nike, AKQA, J&amp;J, Umpqua — with a focus on public-sector and social-impact work.</div></div>
-        <div class="tm"><div class="tm-av">ES</div><div class="tm-name">Einar Schelin</div><div class="tm-role">Copywriter</div><div class="tm-bio">Producer and copywriter specializing in plain-language content — translating dense civic information into clear, actionable copy the whole community can read.</div></div>
-        <div class="tm"><div class="tm-av">AM</div><div class="tm-name">Ally Miller-Buck</div><div class="tm-role">UI Designer</div><div class="tm-bio">Has led UI for 50+ websites, portals, and large-scale digital experiences, with a strong foundation in both print and digital brand systems.</div></div>
+        <div class="tm lead"><div class="tm-av"><img src="https://res.cloudinary.com/dbwtszgtb/image/upload/v1781696778/6ab13af8-e765-46f9-a9c1-6c97367a08e8.png" alt="Jeff Barker" loading="lazy"></div><div class="tm-name">Jeff Barker</div><div class="tm-role">Project &amp; Development Lead · Co-Owner</div><div class="tm-bio">A decade in UX and digital strategy across 500+ web projects. Leads architecture, technical execution, and the three recorded staff training sessions.</div></div>
+        <div class="tm"><div class="tm-av"><img src="https://res.cloudinary.com/dbwtszgtb/image/upload/v1781696798/a27f8404-a43e-452e-a3d6-cde88e101e97.png" alt="Nathan Zanders" loading="lazy"></div><div class="tm-name">Nathan Zanders</div><div class="tm-role">Research Director · Co-Owner</div><div class="tm-bio">Directs research and discovery — stakeholder interviews, user studies, and behavioral testing — so the design is rooted in how the public actually behaves.</div></div>
+        <div class="tm"><div class="tm-av"><img src="https://res.cloudinary.com/dbwtszgtb/image/upload/v1781696824/512bec4c-96bc-4fa4-88ec-828127962324.png" alt="Matthew McMorrow" loading="lazy"></div><div class="tm-name">Matthew McMorrow</div><div class="tm-role">Project Manager · Your Point of Contact</div><div class="tm-bio">Director of Client Experience. Owns day-to-day coordination, communication via Slack/Teams, and scheduling — keeping the project on track, in scope, and on budget.</div></div>
+        <div class="tm"><div class="tm-av"><img src="https://res.cloudinary.com/dbwtszgtb/image/upload/v1781696859/8c9d2b21-f6bd-4334-af88-f75063c3eb49.png" alt="Jonathan Marshall" loading="lazy"></div><div class="tm-name">Jonathan Marshall</div><div class="tm-role">Creative Director · UX</div><div class="tm-bio">15+ years in creative strategy and branding for agencies and Fortune 100 names — Nike, AKQA, J&amp;J, Umpqua — with a focus on public-sector and social-impact work.</div></div>
+        <div class="tm"><div class="tm-av"><img src="https://res.cloudinary.com/dbwtszgtb/image/upload/v1781696879/d808304f-bef9-4e9a-90e9-dda279255dd8.png" alt="Einar Schelin" loading="lazy"></div><div class="tm-name">Einar Schelin</div><div class="tm-role">Copywriter</div><div class="tm-bio">Producer and copywriter specializing in plain-language content — translating dense civic information into clear, actionable copy the whole community can read.</div></div>
+        <div class="tm"><div class="tm-av"><img src="https://res.cloudinary.com/dbwtszgtb/image/upload/v1781696924/image-removebg-preview_l5idsv.png" alt="Ally Miller-Buck" loading="lazy"></div><div class="tm-name">Ally Miller-Buck</div><div class="tm-role">UI Designer</div><div class="tm-bio">Has led UI for 50+ websites, portals, and large-scale digital experiences, with a strong foundation in both print and digital brand systems.</div></div>
       </div>
     </div>
   </div>
@@ -885,28 +896,59 @@ renderPricingCards();
 })();
 </script>
 <script>
-/* ── PORTFOLIO ──
-   Homepage screenshots auto-generate from each live URL (WordPress mShots — free, no key).
-   To use your own crisp screenshots instead, set the "img" field to a hosted image URL.
-   Edit name / loc / date / url below as needed. */
+/* ── PORTFOLIO · BEFORE/AFTER SLIDERS ──
+   before = previous site image; after = redesigned site.
+   If "after" is empty, a screenshot auto-generates from the live URL (WordPress mShots).
+   Edit name / loc / date / url / before / after below as needed. */
 var portfolioData=[
-  {name:"National Carwash Solutions", loc:"Grimes, IA", url:"https://www.ncswash.com/", date:"2025", img:""},
-  {name:"SkillSignal", loc:"New York, NY", url:"https://www.skillsignal.com/", date:"2024", img:""},
-  {name:"The Foxy Kind", loc:"Phoenix, AZ", url:"https://thefoxykind.com/", date:"2023", img:""},
-  {name:"Speeders Car Wash", loc:"Bristol, CT", url:"https://speeders.com/", date:"2024", img:""}
+  {name:"National Carwash Solutions", loc:"Grimes, IA", url:"https://www.ncswash.com/", date:"2023",
+   before:"https://res.cloudinary.com/dbwtszgtb/image/upload/v1781695747/Screenshot_2026-06-17_at_5.29.04_AM_grm7pw.png", after:""},
+  {name:"SkillSignal", loc:"New York, NY", url:"https://www.skillsignal.com/", date:"2025",
+   before:"https://res.cloudinary.com/dbwtszgtb/image/upload/v1781695905/Screenshot_2026-06-17_at_5.31.42_AM_s6ikbn.png", after:""},
+  {name:"The Foxy Kind", loc:"Phoenix, AZ", url:"https://thefoxykind.com/", date:"2026",
+   before:"https://res.cloudinary.com/dbwtszgtb/image/upload/v1781696021/Screenshot_2026-06-17_at_5.33.37_AM_p4xfsg.png",
+   after:"https://res.cloudinary.com/dbwtszgtb/image/upload/v1781695716/Screenshot_2026-06-17_at_5.28.23_AM_tkpk5m.png"},
+  {name:"Speeders Car Wash", loc:"Bristol, CT", url:"https://speeders.com/", date:"2024",
+   before:"https://res.cloudinary.com/dbwtszgtb/image/upload/v1781696155/Screenshot_2026-06-17_at_5.35.51_AM_gboevs.png", after:""}
 ];
 function renderPortfolio(){
   var g=document.getElementById('pfgrid');if(!g)return;
-  g.innerHTML=portfolioData.map(function(p){
-    var shot=p.img?p.img:'https://s.wordpress.com/mshots/v1/'+encodeURIComponent(p.url)+'?w=1200&h=750';
-    return '<a class="pf-card" href="'+p.url+'" target="_blank" rel="noopener">'+
-      '<div class="pf-shot"><span class="pf-visit">Visit site ↗</span>'+
-        '<img loading="lazy" src="'+shot+'" alt="'+p.name+' homepage screenshot">'+
+  g.innerHTML=portfolioData.map(function(p,i){
+    var after=p.after?p.after:'https://s.wordpress.com/mshots/v1/'+encodeURIComponent(p.url)+'?w=1200&h=750';
+    return '<div class="pf-card">'+
+      '<div class="ba" id="ba-'+i+'" style="--pos:50%">'+
+        '<img class="ba-img ba-after" src="'+after+'" alt="'+p.name+' — redesigned site" draggable="false">'+
+        '<img class="ba-img ba-before" src="'+p.before+'" alt="'+p.name+' — previous site" draggable="false">'+
+        '<span class="ba-tag ba-tag-l">Before</span>'+
+        '<span class="ba-tag ba-tag-r">After</span>'+
+        '<div class="ba-divider"><span class="ba-handle" tabindex="0" role="slider" aria-label="Compare '+p.name+' before and after" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">↔</span></div>'+
       '</div>'+
-      '<div class="pf-meta"><div><div class="pf-name">'+p.name+'</div>'+(p.loc?'<div class="pf-loc">'+p.loc+'</div>':'')+'</div>'+
+      '<div class="pf-meta"><div><a class="pf-name" href="'+p.url+'" target="_blank" rel="noopener">'+p.name+' ↗</a>'+(p.loc?'<div class="pf-loc">'+p.loc+'</div>':'')+'</div>'+
       '<div class="pf-date">'+p.date+'</div></div>'+
-    '</a>';
+    '</div>';
   }).join('');
+  initSliders();
+}
+function initSliders(){
+  document.querySelectorAll('.ba').forEach(function(ba){
+    var handle=ba.querySelector('.ba-handle'),dragging=false;
+    function setPos(clientX){
+      var r=ba.getBoundingClientRect();
+      var pos=Math.max(0,Math.min(100,((clientX-r.left)/r.width)*100));
+      ba.style.setProperty('--pos',pos+'%');
+      if(handle)handle.setAttribute('aria-valuenow',Math.round(pos));
+    }
+    ba.addEventListener('pointerdown',function(e){dragging=true;try{ba.setPointerCapture(e.pointerId);}catch(x){}setPos(e.clientX);e.preventDefault();});
+    ba.addEventListener('pointermove',function(e){if(dragging)setPos(e.clientX);});
+    ba.addEventListener('pointerup',function(){dragging=false;});
+    ba.addEventListener('pointercancel',function(){dragging=false;});
+    if(handle)handle.addEventListener('keydown',function(e){
+      var cur=parseFloat(ba.style.getPropertyValue('--pos'))||50,n=null;
+      if(e.key==='ArrowLeft')n=Math.max(0,cur-4);
+      if(e.key==='ArrowRight')n=Math.min(100,cur+4);
+      if(n!==null){ba.style.setProperty('--pos',n+'%');handle.setAttribute('aria-valuenow',Math.round(n));e.preventDefault();}
+    });
+  });
 }
 renderPortfolio();
 </script>
